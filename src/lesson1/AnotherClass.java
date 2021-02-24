@@ -1,8 +1,5 @@
 package lesson1;
 
-import lesson1.Electric;
-import lesson1.Hybrid;
-
 public class AnotherClass {
     public static void main(String[] args){
         Hybrid car1 = new Hybrid("Toyota", "Prius", 2018, "Electricity, Gas");
