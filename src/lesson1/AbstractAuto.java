@@ -1,12 +1,12 @@
 package lesson1;
 
-public abstract class AbstractIAuto implements IAuto {
+public abstract class AbstractAuto implements IAuto {
     protected String make;
     protected String model;
     protected int year;
     protected String engine;
 
-    public AbstractIAuto(String make, String model, int year, String engine) {
+    public AbstractAuto(String make, String model, int year, String engine) {
         this.make = make;
         this.model = model;
         this.year = year;
