@@ -46,11 +46,6 @@ public abstract class AbstractAuto implements IAuto {
     }
 
     @Override
-    public void drive() {
-        System.out.println("Abstract auto cannot drive");
-    }
-
-    @Override
     public void displayInfo() {
         System.out.println("This is " + this.make + ", " + this.model + " that has been produced in " + this.year + ". Engine type - " + this.engine);
     }

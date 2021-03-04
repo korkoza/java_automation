@@ -4,6 +4,7 @@ abstract class Employee {
     protected String name;
     protected String surname;
     protected String ID;
+    protected double salary;
 
     public Employee(String name, String surname, String ID) {
         this.name = name;
@@ -35,10 +36,9 @@ abstract class Employee {
         this.ID = ID;
     }
 
-    public abstract float averageSalary();
+    public abstract double getCalculatedSalary(int days, int hours, float rate);
 
     public void displaySalary(){
-        System.out.println("Salary of " + this.name + ", " + this.surname + " is $" + averageSalary());
-    };
-
+        System.out.println("Salary of " + this.name + ", " + this.surname + " is $" + this.salary);
+    }
 }
