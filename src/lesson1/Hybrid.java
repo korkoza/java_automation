@@ -1,8 +1,6 @@
 package lesson1;
 
-import lesson1.Auto;
-
-public class Hybrid extends Auto {
+public class Hybrid extends AbstractAuto {
     public Hybrid(String make, String model, int year, String engine) {
         super(make, model, year, engine);
     }
