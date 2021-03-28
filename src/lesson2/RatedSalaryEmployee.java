@@ -8,7 +8,7 @@ public class RatedSalaryEmployee extends Employee{
     }
 
     @Override
-    public double getCalculatedSalary(int days, int hours, float rate) {
+    public double getCalculatedSalary(int days, int hours, double rate) {
         return salary = days * hours * rate;
     }
 }
