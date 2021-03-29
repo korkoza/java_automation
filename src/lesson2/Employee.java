@@ -12,6 +12,14 @@ abstract class Employee {
         this.ID = ID;
     }
 
+    public double getSalary() {
+        return salary;
+    }
+
+    public void setSalary(double salary) {
+        this.salary = salary;
+    }
+
     public String getName() {
         return name;
     }
@@ -36,7 +44,7 @@ abstract class Employee {
         this.ID = ID;
     }
 
-    public abstract double getCalculatedSalary(int days, int hours, float rate);
+    public abstract double getCalculatedSalary(int days, int hours, double rate);
 
     public void displaySalary(){
         System.out.println("Salary of " + this.name + ", " + this.surname + " is $" + this.salary);
