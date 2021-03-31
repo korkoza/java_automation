@@ -1,17 +1,14 @@
 package lesson2;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class ShowInfo{
-
     public static void main(String[] args){
 
         // Process FixedSalaryEmployee
 
-        List<FixedSalaryEmployee> FixedSalaryEmployeeList = new ArrayList<>();
+        List<FixedSalaryEmployee> fixedSalaryEmployeeList = new ArrayList<>();
 
         FixedSalaryEmployee JhonDoe1 = new FixedSalaryEmployee("Jhon", "Doe9", "9");
         FixedSalaryEmployee JhonDoe2 = new FixedSalaryEmployee("Jhon", "Doe8", "8");
@@ -24,33 +21,33 @@ public class ShowInfo{
         FixedSalaryEmployee JhonDoe9 = new FixedSalaryEmployee("Jhon", "Doe7", "7");
         FixedSalaryEmployee JhonDoe10 = new FixedSalaryEmployee("Jhon", "Doe10", "10");
 
-        FixedSalaryEmployeeList.add(JhonDoe1);
-        FixedSalaryEmployeeList.add(JhonDoe2);
-        FixedSalaryEmployeeList.add(JhonDoe3);
-        FixedSalaryEmployeeList.add(JhonDoe4);
-        FixedSalaryEmployeeList.add(JhonDoe5);
-        FixedSalaryEmployeeList.add(JhonDoe6);
-        FixedSalaryEmployeeList.add(JhonDoe7);
-        FixedSalaryEmployeeList.add(JhonDoe8);
-        FixedSalaryEmployeeList.add(JhonDoe9);
-        FixedSalaryEmployeeList.add(JhonDoe10);
+        fixedSalaryEmployeeList.add(JhonDoe1);
+        fixedSalaryEmployeeList.add(JhonDoe2);
+        fixedSalaryEmployeeList.add(JhonDoe3);
+        fixedSalaryEmployeeList.add(JhonDoe4);
+        fixedSalaryEmployeeList.add(JhonDoe5);
+        fixedSalaryEmployeeList.add(JhonDoe6);
+        fixedSalaryEmployeeList.add(JhonDoe7);
+        fixedSalaryEmployeeList.add(JhonDoe8);
+        fixedSalaryEmployeeList.add(JhonDoe9);
+        fixedSalaryEmployeeList.add(JhonDoe10);
 
         // Calculate salary
-        for(FixedSalaryEmployee i:FixedSalaryEmployeeList){
+        for(FixedSalaryEmployee i:fixedSalaryEmployeeList){
             i.getCalculatedSalary(0,0,0);
         }
 
         // Sort the list by Salary and then Surname
-        FixedSalaryEmployeeList.sort(Comparator.comparing(FixedSalaryEmployee::getSalary).thenComparing(FixedSalaryEmployee::getSurname));
+        fixedSalaryEmployeeList.sort(Comparator.comparing(FixedSalaryEmployee::getSalary).thenComparing(FixedSalaryEmployee::getSurname));
 
         // Display sorted list
         System.out.println("Fixed salary employee");
-        for(FixedSalaryEmployee i:FixedSalaryEmployeeList){
+        for(FixedSalaryEmployee i:fixedSalaryEmployeeList){
             System.out.println("name - " + i.name + " " + i.surname + ", ID - " + i.ID + ", salary - " + i.salary);
         }
 
         // Process RatedSalaryEmployee
-        List<RatedSalaryEmployee> RatedSalaryEmployeeList = new ArrayList<>();
+        List<RatedSalaryEmployee> ratedSalaryEmployeeList = new ArrayList<>();
 
         RatedSalaryEmployee JaneDoe11 = new RatedSalaryEmployee("Jane", "Doe11", "11");
         RatedSalaryEmployee JaneDoe12 = new RatedSalaryEmployee("Jane", "Doe12", "12");
@@ -63,42 +60,86 @@ public class ShowInfo{
         RatedSalaryEmployee JaneDoe19 = new RatedSalaryEmployee("Jane", "Doe19", "19");
         RatedSalaryEmployee JaneDoe20 = new RatedSalaryEmployee("Jane", "Doe20", "20");
 
-        RatedSalaryEmployeeList.add(JaneDoe11);
-        RatedSalaryEmployeeList.add(JaneDoe12);
-        RatedSalaryEmployeeList.add(JaneDoe13);
-        RatedSalaryEmployeeList.add(JaneDoe14);
-        RatedSalaryEmployeeList.add(JaneDoe15);
-        RatedSalaryEmployeeList.add(JaneDoe16);
-        RatedSalaryEmployeeList.add(JaneDoe17);
-        RatedSalaryEmployeeList.add(JaneDoe18);
-        RatedSalaryEmployeeList.add(JaneDoe19);
-        RatedSalaryEmployeeList.add(JaneDoe20);
+        ratedSalaryEmployeeList.add(JaneDoe11);
+        ratedSalaryEmployeeList.add(JaneDoe12);
+        ratedSalaryEmployeeList.add(JaneDoe13);
+        ratedSalaryEmployeeList.add(JaneDoe14);
+        ratedSalaryEmployeeList.add(JaneDoe15);
+        ratedSalaryEmployeeList.add(JaneDoe16);
+        ratedSalaryEmployeeList.add(JaneDoe17);
+        ratedSalaryEmployeeList.add(JaneDoe18);
+        ratedSalaryEmployeeList.add(JaneDoe19);
+        ratedSalaryEmployeeList.add(JaneDoe20);
 
         // Calculate salary
-        for(RatedSalaryEmployee i:RatedSalaryEmployeeList){
+        for(RatedSalaryEmployee i:ratedSalaryEmployeeList){
             i.getCalculatedSalary(21, 8, 30*Math.random());
         }
 
         // Sort the list by Salary and then Surname
-        RatedSalaryEmployeeList.sort(Comparator.comparing(RatedSalaryEmployee::getSalary).thenComparing(RatedSalaryEmployee::getSurname));
+        ratedSalaryEmployeeList.sort(Comparator.comparing(RatedSalaryEmployee::getSalary).thenComparing(RatedSalaryEmployee::getSurname));
 
         // Display sorted list
         System.out.println("\nRated salary employee");
-        for(RatedSalaryEmployee i:RatedSalaryEmployeeList){
+        for(RatedSalaryEmployee i:ratedSalaryEmployeeList){
             System.out.println("name - " + i.name + " " + i.surname + ", ID - " + i.ID + ", salary - " + String.format("%.2f", i.salary));
         }
 
         // Display the names of the fist 5 items
         System.out.println("\nNames of the fist 5 items");
         for(int j=0; j<5; j++){
-            System.out.println(RatedSalaryEmployeeList.get(j).surname);
+            System.out.println(ratedSalaryEmployeeList.get(j).surname);
         }
 
         // Display the IDs of the last 3 items
         System.out.println("\nIDs of the last 3 items");
-        for(int j=RatedSalaryEmployeeList.size(); j>RatedSalaryEmployeeList.size()-3; j--){
-            System.out.println(RatedSalaryEmployeeList.get(j-1).ID);
+        for(int j=ratedSalaryEmployeeList.size(); j>ratedSalaryEmployeeList.size()-3; j--){
+            System.out.println(ratedSalaryEmployeeList.get(j-1).ID);
         }
 
+        // ---------------------------------------------------------------------------------------------------------------
+        System.out.println("\nWORKING WITH STREAMS \nTask 1:\n");
+
+        // 1.
+        ratedSalaryEmployeeList.stream()
+                .forEach(e -> System.out.println("name - " + e.name + " " + e.surname + ", ID - " + e.ID + ", salary - " + String.format("%.2f", e.salary)));
+
+        // 2.
+        List <String> ratedSalaryEmployeesNames = ratedSalaryEmployeeList.stream()
+                .map(p->p.name)
+                .collect(Collectors.toList());
+
+        System.out.println("\nTask 2: \nNew list with names only: " + ratedSalaryEmployeesNames);
+
+
+        // 3.
+        List <String> fixedSalaryEmployeeSurnamesAddedList = fixedSalaryEmployeeList.stream()
+                .map(p->p.surname + "_added")
+                .collect(Collectors.toList());
+
+        System.out.println("\nTask 3: \nNew list after concatenation: " + fixedSalaryEmployeeSurnamesAddedList);
+
+        // 4.
+        List <Double> fixedSalaryEmployeeChangedSalaryList = fixedSalaryEmployeeList.stream()
+                .map(p -> p.salary - 500)
+                .collect(Collectors.toList());
+
+        System.out.println("\nTask 4:\nList of salaries after subtraction of 500: " + fixedSalaryEmployeeChangedSalaryList);
+
+        // 5.
+        System.out.println("\nTask 5:\nFiltered list of random numbers");
+
+        List <Double> randomNumbersList = new ArrayList<>();
+        for (int i=0; i<10; i++) {
+            randomNumbersList.add(100 * Math.random());
+        }
+
+        List <Double> filteredRandomList = randomNumbersList.stream()
+                .map(p -> p + 5)
+                .filter(p -> p > 20)
+                .collect(Collectors.toList());
+
+        filteredRandomList.forEach(p -> System.out.printf("%.2f ", p));
+
+        }
     }
-}
