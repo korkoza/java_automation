@@ -1,4 +1,4 @@
-package lesson1;
+package JavaPractice.lesson1;
 
 public abstract class AbstractAuto implements IAuto {
     protected String make;

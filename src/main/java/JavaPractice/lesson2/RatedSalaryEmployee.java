@@ -1,4 +1,4 @@
-package lesson2;
+package JavaPractice.lesson2;
 
 public class RatedSalaryEmployee extends Employee{
 

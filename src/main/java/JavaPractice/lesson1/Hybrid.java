@@ -1,4 +1,4 @@
-package lesson1;
+package JavaPractice.lesson1;
 
 public class Hybrid extends AbstractAuto {
     public Hybrid(String make, String model, int year, String engine) {

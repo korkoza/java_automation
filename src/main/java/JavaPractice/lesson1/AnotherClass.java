@@ -1,4 +1,4 @@
-package lesson1;
+package JavaPractice.lesson1;
 
 public class AnotherClass {
     public static void main(String[] args){

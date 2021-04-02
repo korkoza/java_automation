@@ -1,7 +1,6 @@
-package lesson2;
+package JavaPractice.lesson2;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 

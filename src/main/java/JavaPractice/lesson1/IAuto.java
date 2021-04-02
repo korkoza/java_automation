@@ -1,4 +1,4 @@
-package lesson1;
+package JavaPractice.lesson1;
 
 interface IAuto {
     void drive();

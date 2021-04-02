@@ -1,4 +1,4 @@
-package lesson2;
+package JavaPractice.lesson2;
 
 public class FixedSalaryEmployee extends Employee{
     private final double fixedValue = 3321.1;
