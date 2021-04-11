@@ -35,16 +35,18 @@ public class FirstUITest extends TestRunner {
 
     @Test
     public void testFirstResultContainsFunnykitten(){
+        String searchTerm = "funny kitten";
 
         String firstResult = new GoogleHomePage()
-                .doSearch("funny kitten")
+                .doSearch(searchTerm)
                 .getLinkText(1);
 
-        Assert.assertTrue(firstResult.contains("funny kitten"));
+        Assert.assertTrue(firstResult.contains(searchTerm));
     }
 
     @Test
     public void testImagesContainFunny(){
+        String varForAssertion = "Funny";
 
         Integer numberOfImages = new GoogleHomePage()
                 .doSearch("funny kitten")
@@ -59,7 +61,7 @@ public class FirstUITest extends TestRunner {
         String fifthImageText = new GoogleImagesPage()
                 .getImageText(5);
 
-        Assert.assertTrue(firstImageText.contains("Funny")||fifthImageText.contains("Funny"));
+        Assert.assertTrue(firstImageText.contains(varForAssertion)||fifthImageText.contains(varForAssertion));
 
         String pageTitle = new GoogleImagesPage()
                 .clickOnLogo()
