@@ -1,0 +1,6 @@
+src/main/resources/
+target/
+.idea/
+out/
+Lesson1.iml
+src/main/java/javaPractice
