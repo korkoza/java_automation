@@ -26,6 +26,7 @@ public class FirstUITest extends TestRunner {
                 .doSearch("smartphone")
                 .resultContainsText(verifiedText);
 
+
         Assert.assertTrue(result,String.format("Search result should contain \"%s\"", verifiedText));
     }
 
