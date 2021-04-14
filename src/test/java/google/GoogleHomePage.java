@@ -1,25 +1,23 @@
 package google;
-import static google.TestRunner.chromeDriver;
+import static com.codeborne.selenide.Selenide.$;
+import com.codeborne.selenide.Selenide;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-
 
 public class GoogleHomePage {
 
     public GoogleHomePage open() {
-        chromeDriver.get("https://www.google.com/");
+        Selenide.open("https://www.google.com/");
         return this;
     }
 
     public GoogleSearchResultPage doSearch(String searchTerm) {
-        chromeDriver
-                .findElement(By.xpath("//input[@class='gLFyf gsfi']"))
-                .sendKeys(searchTerm, Keys.ENTER);
-        return new GoogleSearchResultPage();
+        $(By.name("q")).sendKeys(searchTerm, Keys.ENTER);
+
+        return Selenide.page(GoogleSearchResultPage.class);
     }
 
     public String getTitle() {
-        return chromeDriver
-                .getTitle();
+        return Selenide.title();
     }
 }

@@ -1,24 +1,25 @@
 package google;
-import static google.TestRunner.chromeDriver;
-import org.openqa.selenium.By;
+import static com.codeborne.selenide.Selenide.$$x;
+import static com.codeborne.selenide.Selenide.$x;
+import com.codeborne.selenide.CollectionCondition;
+import com.codeborne.selenide.Selenide;
 
 public class GoogleImagesPage {
 
     public Integer getNumberOfImages() {
-        return chromeDriver
-                .findElements(By.xpath("//div[@class='islrc']/div")).size();
+        return $$x("//div[@class='islrc']/div")
+                .shouldHave(CollectionCondition.sizeGreaterThan(10))
+                .size();
     }
 
     public String getImageText(int position) {
-        return chromeDriver
-                .findElement(By.xpath(String.format("//div[@class='islrc']/div[%s]", position)))
+        return $x(String.format("//div[@class='islrc']/div[%s]", position))
                 .getText();
     }
 
-    public GoogleHomePage clickOnLogo() {
-        chromeDriver
-                .findElement(By.xpath("//a[@class='F1hUFe jbTlie']"))
+    public GoogleHomePage goToHomePageViaLogo() {
+        $x("//div[@class='ZbYMvd']")
                 .click();
-        return new GoogleHomePage();
+        return Selenide.page(GoogleHomePage.class);
     }
 }
