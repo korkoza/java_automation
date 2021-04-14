@@ -1,72 +1,70 @@
 package google;
 
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebElement;
+import com.codeborne.selenide.Selenide;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
 public class FirstUITest extends TestRunner {
+    GoogleHomePage googleHomePage = new GoogleHomePage();
+    GoogleImagesPage googleImagesPage = new GoogleImagesPage();
 
     @BeforeMethod
     public void openBrowser() {
-       new GoogleHomePage().open();
+       googleHomePage.open();
     }
 
     @AfterMethod
     public void closeBrowser() {
-        chromeDriver.quit();
+        Selenide.closeWindow();
     }
 
     @Test
     public void testGoogleSearchResultContainsResource() {
-        WebElement linkContainingText = null;
-        String chekedResource = "\"wikipedia\"";
+        String verifiedText = "Wikipedia" ;
 
-        try {
-           linkContainingText = new GoogleHomePage()
-                    .doSearch("smartphone")
-                    .getLinkContainingText(chekedResource);
-        } catch (NoSuchElementException e) {
-            System.out.println("Link containing " + chekedResource + " is not found. Either it is not found indeed or try checking the locator for corectness");
-        } finally {
-            Assert.assertNotNull(linkContainingText);
-        }
+        boolean result = googleHomePage
+                .doSearch("smartphone")
+                .checkWhetherResultContainsText(verifiedText);
+
+        Assert.assertTrue(result,String.format("Search result should contain \"%s\"", verifiedText));
     }
 
     @Test
     public void testFirstResultContainsFunnykitten(){
         String searchTerm = "funny kitten";
 
-        String firstResult = new GoogleHomePage()
+        String firstResult = googleHomePage
                 .doSearch(searchTerm)
                 .getLinkText(1);
 
-        Assert.assertTrue(firstResult.contains(searchTerm));
+        Assert.assertTrue(firstResult.contains(searchTerm), String.format("The first result should contain \"%s\"", searchTerm));
     }
 
     @Test
     public void testImagesContainFunny(){
         String varForAssertion = "Funny";
+        int expectedNumberOfImages = 9;
 
-        Integer numberOfImages = new GoogleHomePage()
+        Integer numberOfImages = googleHomePage
                 .doSearch("funny kitten")
-                .goToImages()
+                .goToImagesPage()
                 .getNumberOfImages();
 
-        Assert.assertTrue(numberOfImages >= 10);
+        Assert.assertTrue(numberOfImages >= expectedNumberOfImages, String.format("Number of images should be greater than %s", expectedNumberOfImages));
 
-        String firstImageText = new GoogleImagesPage()
+        String firstImageText = googleImagesPage
                 .getImageText(1);
 
-        String fifthImageText = new GoogleImagesPage()
+        String fifthImageText = googleImagesPage
                 .getImageText(5);
 
-        Assert.assertTrue(firstImageText.contains(varForAssertion)||fifthImageText.contains(varForAssertion));
+        Assert.assertTrue(firstImageText.contains(varForAssertion), String.format("The first image should contain \"%s\"", varForAssertion));
+        Assert.assertTrue(fifthImageText.contains(varForAssertion), String.format("The fifth image should contain \"%s\"", varForAssertion));
 
-        String pageTitle = new GoogleImagesPage()
-                .clickOnLogo()
+        String pageTitle = googleImagesPage
+                .goToHomePageViaLogo()
                 .getTitle();
 
-        Assert.assertTrue(pageTitle.equals("Google"));
+        Assert.assertTrue(pageTitle.equals("Google"), "Home page should be opened");
     }
 }

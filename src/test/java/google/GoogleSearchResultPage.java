@@ -1,27 +1,37 @@
 package google;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import static google.TestRunner.chromeDriver;
+import com.codeborne.selenide.CollectionCondition;
+import com.codeborne.selenide.Selenide;
+
+import java.util.List;
+import static com.codeborne.selenide.Selenide.$$x;
+import static com.codeborne.selenide.Selenide.$x;
 
 public class GoogleSearchResultPage {
 
-    public WebElement getLinkContainingText(String text) {
-        WebElement link;
-        return link = chromeDriver
-                .findElement(By.xpath(String.format("//a[contains(@href,%s)]",text)));
+    public boolean checkWhetherResultContainsText(String text) {
+        boolean isContained = false;
+
+        List<String> resultTexts = $$x("//div[@class='g']")
+                .shouldHave(CollectionCondition.sizeGreaterThan(5))
+                .texts();
+
+        for(String i:resultTexts){
+            isContained = i.contains(text);
+            if (isContained) break;
+        }
+
+        return isContained;
     }
 
     public String getLinkText(int position) {
-        return chromeDriver
-                .findElement(By.xpath(String.format("//div[@class='hlcw0c']/descendant::h3[%s]",position)))
+        return $x(String.format("//div[@class='hlcw0c']/descendant::h3[%s]",position))
                 .getText();
     }
 
-    public GoogleImagesPage goToImages() {
-        chromeDriver
-                .findElement(By.xpath("//div[@class='hdtb-mitem'][1]/a[@class='hide-focus-ring']"))
+    public GoogleImagesPage goToImagesPage() {
+        $x("//div[@class='hdtb-mitem'][1]/a[@class='hide-focus-ring']")
                 .click();
-        return new GoogleImagesPage();
+        return Selenide.page(GoogleImagesPage.class);
     }
 }
