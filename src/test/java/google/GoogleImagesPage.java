@@ -4,7 +4,7 @@ import static com.codeborne.selenide.Selenide.$x;
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Selenide;
 
-public class GoogleImagesPage {
+public class GoogleImagesPage extends Base{
 
     public Integer getNumberOfImages() {
         return $$x("//div[@class='islrc']/div")

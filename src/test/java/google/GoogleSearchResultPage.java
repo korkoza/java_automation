@@ -7,7 +7,7 @@ import java.util.List;
 import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.$x;
 
-public class GoogleSearchResultPage {
+public class GoogleSearchResultPage extends Base {
 
     public boolean resultContainsText(String text) {
         boolean isContained = false;
@@ -33,5 +33,18 @@ public class GoogleSearchResultPage {
         $x("//div[@class='hdtb-mitem'][1]/a[@class='hide-focus-ring']")
                 .click();
         return Selenide.page(GoogleImagesPage.class);
+    }
+
+    public GoogleSearchResultPage goToSearchResultPage(int pageNumber) {
+        $x(String.format("//a[@aria-label='Page %s']", pageNumber));
+        return Selenide.page(GoogleSearchResultPage.class);
+    }
+
+    public int getNumberOfResultsOnPage() {
+        return $$x("//div[@class='g']").size();
+    }
+
+    public String getPageNumberByPosition(int position) {
+        return $x(String.format("//tr[@jsname='TeSSVd']/td[%s]", position)).getText();
     }
 }
