@@ -20,16 +20,18 @@ public class FirstUITest extends TestRunner {
 
     @Test
     public void testGoogleSearchResultContainsResource() {
-        String expectedTextInResult = "Wikipedia";
-        boolean doesResultContainText = false;
-
         List<String> results = googleHomePage
                 .doSearch("smartphone")
                 .getListOfResults();
 
-        for(String i:results){
-            doesResultContainText = i.contains(expectedTextInResult);
-            if (doesResultContainText) break;
+        String expectedTextInResult = "Wikipedia";
+        boolean doesResultContainText = false;
+
+        for(String result:results){
+            doesResultContainText = result.contains(expectedTextInResult);
+            if (doesResultContainText) {
+                break;
+            }
         }
 
         Assert.assertTrue(doesResultContainText,String.format("Search result should contain \"%s\"", expectedTextInResult));
@@ -48,9 +50,6 @@ public class FirstUITest extends TestRunner {
 
     @Test
     public void testImagesContainFunny(){
-        String expectedImageText = "Funny";
-        int expectedQuantityOfImages = 10;
-
         GoogleImagesPage imagesPage = googleHomePage
                 .doSearch("funny kitten")
                 .goToImagesPage();
@@ -58,6 +57,7 @@ public class FirstUITest extends TestRunner {
         int quantityOfImages = imagesPage
                 .getQuantityOfImages();
 
+        int expectedQuantityOfImages = 10;
         Assert.assertTrue(quantityOfImages >= expectedQuantityOfImages, String.format("Number of images should be greater or equal than %s", expectedQuantityOfImages));
 
         String firstImageText = imagesPage
@@ -66,6 +66,7 @@ public class FirstUITest extends TestRunner {
         String fifthImageText = imagesPage
                 .getImageText(5);
 
+        String expectedImageText = "Funny";
         Assert.assertTrue(firstImageText.contains(expectedImageText), String.format("The first image should contain \"%s\"", expectedImageText));
         Assert.assertTrue(fifthImageText.contains(expectedImageText), String.format("The fifth image should contain \"%s\"", expectedImageText));
 
@@ -104,13 +105,12 @@ public class FirstUITest extends TestRunner {
 
     @Test
     public void testFeelLuckyReturnYouTube() {
-        String expectedText = "YouTube";
-
         String title = googleHomePage
                 .setTextToSearch("funny kitten")
                 .iAmFeelingLucky()
                 .getTitle();
 
+        String expectedText = "YouTube";
         boolean doesTitleContainText = title.contains(expectedText);
         Assert.assertTrue(doesTitleContainText, String.format("Title should contain \"%s\"", expectedText));
     }
