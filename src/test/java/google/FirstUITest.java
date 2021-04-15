@@ -3,15 +3,14 @@ package google;
 import com.codeborne.selenide.Selenide;
 import org.testng.Assert;
 import org.testng.annotations.*;
+import java.util.List;
 
 public class FirstUITest extends TestRunner {
-    GoogleHomePage googleHomePage = new GoogleHomePage();
-    GoogleImagesPage googleImagesPage = new GoogleImagesPage();
-    GoogleSearchResultPage googleSearchResultPage = new GoogleSearchResultPage();
+    public GoogleHomePage googleHomePage;
 
     @BeforeMethod
     public void openBrowser() {
-       googleHomePage.open();
+       googleHomePage = new GoogleHomePage().open();
     }
 
     @AfterMethod
@@ -21,13 +20,19 @@ public class FirstUITest extends TestRunner {
 
     @Test
     public void testGoogleSearchResultContainsResource() {
-        String verifiedText = "Wikipedia" ;
+        String expectedTextInResult = "Wikipedia";
+        boolean doesResultContainText = false;
 
-        boolean result = googleHomePage
+        List<String> results = googleHomePage
                 .doSearch("smartphone")
-                .resultContainsText(verifiedText);
+                .getListOfResults();
 
-        Assert.assertTrue(result,String.format("Search result should contain \"%s\"", verifiedText));
+        for(String i:results){
+            doesResultContainText = i.contains(expectedTextInResult);
+            if (doesResultContainText) break;
+        }
+
+        Assert.assertTrue(doesResultContainText,String.format("Search result should contain \"%s\"", expectedTextInResult));
     }
 
     @Test
@@ -43,26 +48,28 @@ public class FirstUITest extends TestRunner {
 
     @Test
     public void testImagesContainFunny(){
-        String varForAssertion = "Funny";
-        int expectedNumberOfImages = 9;
+        String expectedImageText = "Funny";
+        int expectedQuantityOfImages = 10;
 
-        Integer numberOfImages = googleHomePage
+        GoogleImagesPage imagesPage = googleHomePage
                 .doSearch("funny kitten")
-                .goToImagesPage()
-                .getNumberOfImages();
+                .goToImagesPage();
 
-        Assert.assertTrue(numberOfImages >= expectedNumberOfImages, String.format("Number of images should be greater than %s", expectedNumberOfImages));
+        int quantityOfImages = imagesPage
+                .getQuantityOfImages();
 
-        String firstImageText = googleImagesPage
+        Assert.assertTrue(quantityOfImages >= expectedQuantityOfImages, String.format("Number of images should be greater or equal than %s", expectedQuantityOfImages));
+
+        String firstImageText = imagesPage
                 .getImageText(1);
 
-        String fifthImageText = googleImagesPage
+        String fifthImageText = imagesPage
                 .getImageText(5);
 
-        Assert.assertTrue(firstImageText.contains(varForAssertion), String.format("The first image should contain \"%s\"", varForAssertion));
-        Assert.assertTrue(fifthImageText.contains(varForAssertion), String.format("The fifth image should contain \"%s\"", varForAssertion));
+        Assert.assertTrue(firstImageText.contains(expectedImageText), String.format("The first image should contain \"%s\"", expectedImageText));
+        Assert.assertTrue(fifthImageText.contains(expectedImageText), String.format("The fifth image should contain \"%s\"", expectedImageText));
 
-        String pageTitle = googleImagesPage
+        String pageTitle = imagesPage
                 .goToHomePageViaLogo()
                 .getTitle();
 
@@ -97,34 +104,33 @@ public class FirstUITest extends TestRunner {
 
     @Test
     public void testFeelLuckyReturnYouTube() {
-        String verifiedValue = "YouTube";
+        String expectedText = "YouTube";
 
         String title = googleHomePage
-                .typeTextToSearchField("funny kitten")
+                .setTextToSearch("funny kitten")
                 .iAmFeelingLucky()
                 .getTitle();
 
-        boolean titleContainsText = title.contains(verifiedValue);
-        Assert.assertTrue(titleContainsText, String.format("Title should contain \"%s\"", verifiedValue));
+        boolean doesTitleContainText = title.contains(expectedText);
+        Assert.assertTrue(doesTitleContainText, String.format("Title should contain \"%s\"", expectedText));
     }
 
     @Test
-    public void testFifthResultPage() {
-        int pageResultNumber = googleHomePage
+    public void testFifthPageResult() {
+        int pageNumber = 5;
+
+        GoogleSearchResultPage googleSearchResultPage = googleHomePage
                 .doSearch("funny kitten")
-                .goToSearchResultPage(5)
-                .getNumberOfResultsOnPage();
+                .goToSearchResultPage(pageNumber);
 
-        Assert.assertEquals(pageResultNumber, 9, "Page should contain 10 results");
+        int quantityOfResultsOnPage = googleSearchResultPage
+                .getQuantityOfResultsOnPage();
 
-        String firstPosition = googleSearchResultPage
-                .getPageNumberByPosition(2); // 1 is for "Previous", 12 is for "Next"
+        Assert.assertEquals(quantityOfResultsOnPage, 10, "Page should contain 10 results");
 
-        Assert.assertEquals(firstPosition, "1", "First position should point to Page 1");
+        int currentPageNumber = googleSearchResultPage
+                .getCurrentPageNumber();
 
-        String fifthPosition = googleSearchResultPage
-                .getPageNumberByPosition(11); // 1 is for "Previous", 12 is for "Next"
-
-        Assert.assertEquals(fifthPosition, "10", "Fifth position should point to Page 10");
+        Assert.assertEquals(currentPageNumber, pageNumber, String.format("Page number should equal - %s", pageNumber));
     }
 }

@@ -1,12 +1,13 @@
 package google;
+
 import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.$x;
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Selenide;
 
-public class GoogleImagesPage extends Base{
+public class GoogleImagesPage extends BasePage {
 
-    public Integer getNumberOfImages() {
+    public Integer getQuantityOfImages() {
         return $$x("//div[@class='islrc']/div")
                 .shouldHave(CollectionCondition.sizeGreaterThan(10))
                 .size();
@@ -18,7 +19,7 @@ public class GoogleImagesPage extends Base{
     }
 
     public GoogleHomePage goToHomePageViaLogo() {
-        $x("//div[@class='ZbYMvd']")
+        $x("//div[@class='oDnpvd']//a")
                 .click();
         return Selenide.page(GoogleHomePage.class);
     }

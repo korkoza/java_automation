@@ -2,26 +2,16 @@ package google;
 
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Selenide;
-
 import java.util.List;
 import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.$x;
 
-public class GoogleSearchResultPage extends Base {
+public class GoogleSearchResultPage extends BasePage {
 
-    public boolean resultContainsText(String text) {
-        boolean isContained = false;
-
-        List<String> resultTexts = $$x("//div[@class='g']")
+    public List<String> getListOfResults() {
+        return $$x("//div[@class='g']")
                 .shouldHave(CollectionCondition.sizeGreaterThan(5))
                 .texts();
-
-        for(String i:resultTexts){
-            isContained = i.contains(text);
-            if (isContained) break;
-        }
-
-        return isContained;
     }
 
     public String getLinkText(int position) {
@@ -36,15 +26,16 @@ public class GoogleSearchResultPage extends Base {
     }
 
     public GoogleSearchResultPage goToSearchResultPage(int pageNumber) {
-        $x(String.format("//a[@aria-label='Page %s']", pageNumber));
+        $x(String.format("//a[@aria-label='Page %s']", pageNumber))
+            .click();
         return Selenide.page(GoogleSearchResultPage.class);
     }
 
-    public int getNumberOfResultsOnPage() {
+    public int getQuantityOfResultsOnPage() {
         return $$x("//div[@class='g']").size();
     }
 
-    public String getPageNumberByPosition(int position) {
-        return $x(String.format("//tr[@jsname='TeSSVd']/td[%s]", position)).getText();
+    public int getCurrentPageNumber() {
+        return Integer.parseInt($x("//td[@class='YyVfkd']").getText());
     }
 }

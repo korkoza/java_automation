@@ -1,12 +1,12 @@
 package google;
+
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$x;
-
 import com.codeborne.selenide.Selenide;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 
-public class GoogleHomePage extends Base {
+public class GoogleHomePage extends BasePage {
 
     public GoogleHomePage open() {
         Selenide.open("https://www.google.com/");
@@ -17,10 +17,6 @@ public class GoogleHomePage extends Base {
         $(By.name("q")).sendKeys(searchTerm, Keys.ENTER);
 
         return Selenide.page(GoogleSearchResultPage.class);
-    }
-
-    public String getTitle() {
-        return Selenide.title();
     }
 
     public GoogleHomePage switchLanguage(String lang) {
@@ -38,7 +34,7 @@ public class GoogleHomePage extends Base {
         return $(By.name("btnI")).getValue();
     }
 
-    public GoogleHomePage typeTextToSearchField(String searchTerm) {
+    public GoogleHomePage setTextToSearch(String searchTerm) {
         $(By.name("q")).sendKeys(searchTerm);
         return Selenide.page(GoogleHomePage.class);
     }

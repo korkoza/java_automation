@@ -4,3 +4,4 @@ target/
 out/
 Lesson1.iml
 src/main/java/javaPractice
+build/
