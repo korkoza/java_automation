@@ -2,7 +2,9 @@ package google;
 
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Selenide;
+
 import java.util.List;
+
 import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.$x;
 
@@ -15,7 +17,7 @@ public class GoogleSearchResultPage extends BasePage {
     }
 
     public String getLinkText(int position) {
-        return $x(String.format("//div[@class='hlcw0c']/descendant::h3[%s]",position))
+        return $x(String.format("//div[@class='hlcw0c']/descendant::h3[%s]", position))
                 .getText();
     }
 
@@ -27,7 +29,7 @@ public class GoogleSearchResultPage extends BasePage {
 
     public GoogleSearchResultPage goToSearchResultPage(int pageNumber) {
         $x(String.format("//a[@aria-label='Page %s']", pageNumber))
-            .click();
+                .click();
         return Selenide.page(GoogleSearchResultPage.class);
     }
 

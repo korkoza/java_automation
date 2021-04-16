@@ -3,6 +3,7 @@ package google;
 import com.codeborne.selenide.Selenide;
 import org.testng.Assert;
 import org.testng.annotations.*;
+
 import java.util.List;
 
 public class FirstUITest extends TestRunner {
@@ -10,7 +11,7 @@ public class FirstUITest extends TestRunner {
 
     @BeforeMethod
     public void openBrowser() {
-       googleHomePage = new GoogleHomePage().open();
+        googleHomePage = new GoogleHomePage().open();
     }
 
     @AfterMethod
@@ -27,18 +28,18 @@ public class FirstUITest extends TestRunner {
         String expectedTextInResult = "Wikipedia";
         boolean doesResultContainText = false;
 
-        for(String result:results){
+        for (String result : results) {
             doesResultContainText = result.contains(expectedTextInResult);
             if (doesResultContainText) {
                 break;
             }
         }
 
-        Assert.assertTrue(doesResultContainText,String.format("Search result should contain \"%s\"", expectedTextInResult));
+        Assert.assertTrue(doesResultContainText, String.format("Search result should contain \"%s\"", expectedTextInResult));
     }
 
     @Test
-    public void testFirstResultContainsFunnykitten(){
+    public void testFirstResultContainsFunnykitten() {
         String searchTerm = "funny kitten";
 
         String firstResult = googleHomePage
@@ -49,7 +50,7 @@ public class FirstUITest extends TestRunner {
     }
 
     @Test
-    public void testImagesContainFunny(){
+    public void testImagesContainFunny() {
         GoogleImagesPage imagesPage = googleHomePage
                 .doSearch("funny kitten")
                 .goToImagesPage();
@@ -78,29 +79,29 @@ public class FirstUITest extends TestRunner {
     }
 
     @Test
-    public void testSwitchToUkrainian(){
+    public void testSwitchToUkrainian() {
 //        Ukrainian language is open by default.
 
         String searchButtonText = googleHomePage
                 .getSearchButtonText();
 
-        Assert.assertEquals(searchButtonText,"Пошук Google", String.format("Search button text should be \"%s\"", searchButtonText));
+        Assert.assertEquals(searchButtonText, "Пошук Google", String.format("Search button text should be \"%s\"", searchButtonText));
 
         String feelLuckyButtonText = googleHomePage
                 .getFeelLuckyButtonText();
 
-        Assert.assertEquals(feelLuckyButtonText,"Мені пощастить", String.format("Search button text should be \"%s\"", feelLuckyButtonText));
+        Assert.assertEquals(feelLuckyButtonText, "Мені пощастить", String.format("Search button text should be \"%s\"", feelLuckyButtonText));
 
         searchButtonText = googleHomePage
                 .switchLanguage("Eng")
                 .getSearchButtonText();
 
-        Assert.assertEquals(searchButtonText,"Google Search", String.format("Search button text should be \"%s\"", searchButtonText));
+        Assert.assertEquals(searchButtonText, "Google Search", String.format("Search button text should be \"%s\"", searchButtonText));
 
         feelLuckyButtonText = googleHomePage
                 .getFeelLuckyButtonText();
 
-        Assert.assertEquals(feelLuckyButtonText,"I'm Feeling Lucky", String.format("Search button text should be \"%s\"", feelLuckyButtonText));
+        Assert.assertEquals(feelLuckyButtonText, "I'm Feeling Lucky", String.format("Search button text should be \"%s\"", feelLuckyButtonText));
     }
 
     @Test
