@@ -2,6 +2,7 @@ package google;
 
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
+import static com.codeborne.selenide.Condition.visible;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
 import org.openqa.selenium.JavascriptExecutor;
@@ -71,7 +72,9 @@ public class GoogleSearchResultPage extends BasePage {
 
     public GoogleSearchResultPage sortByTime() {
         $x("//div[@id='hdtbMenus']/span[2]/g-popup").click();
-        $x("//div[@id='lb']//g-menu-item[2]").click();
+        $x("//div[@id='lb']//g-menu-item[2]")
+                .shouldBe(visible)
+                .click();
         return Selenide.page(GoogleSearchResultPage.class);
     }
 
