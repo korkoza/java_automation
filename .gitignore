@@ -2,6 +2,6 @@ src/main/resources/
 target/
 .idea/
 out/
-Lesson1.iml
+*.iml
 src/main/java/javaPractice
 build/

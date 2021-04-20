@@ -1,10 +1,14 @@
 package google;
 
 import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.WebDriverRunner;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class FirstUITest extends TestRunner {
     public GoogleHomePage googleHomePage;
@@ -133,5 +137,69 @@ public class FirstUITest extends TestRunner {
                 .getCurrentPageNumber();
 
         Assert.assertEquals(currentPageNumber, pageNumber, String.format("Page number should equal - %s", pageNumber));
+    }
+
+    @Test
+    public void testLogoVisibility() {
+        WebElement logo = googleHomePage.open()
+                .getLogo();
+
+        JavascriptExecutor js = (JavascriptExecutor) WebDriverRunner.getWebDriver();
+        js.executeScript("arguments[0].style.visibility='hidden'", logo);
+
+        Assert.assertFalse(logo.isDisplayed(), "Logo should not be displayed");
+
+        js.executeScript("arguments[0].style.visibility='visible'", logo);
+
+        Assert.assertTrue(logo.isDisplayed(), "Logo should be displayed");
+    }
+
+    @Test
+    public void testResultsQuantity() {
+        int resultsQuantity = googleHomePage
+                .open()
+                .doSearch("webdriver")
+                .getResultsQuantity();
+
+        Assert.assertTrue(resultsQuantity > 5000000, "Results quantity should more than 5 000 000");
+    }
+
+    @Test
+    public void testLastBookContainsSearchedTerm() {
+        String searchTerm = "webdriver";
+        String lastResultLink = googleHomePage
+                .open()
+                .doSearch(searchTerm)
+                .goToBooksPage()
+                .getLinkTextByPosition(10);
+
+        boolean doesLastLinkContainSearchTerm = Pattern.compile(Pattern.quote(searchTerm), Pattern.CASE_INSENSITIVE).matcher(lastResultLink).find();
+        Assert.assertTrue(doesLastLinkContainSearchTerm, String.format("Last link should contain %s", searchTerm));
+    }
+
+    @Test
+    public void testResultsSortedByTimeContain() {
+        String firstResultLifetime = googleHomePage.open()
+                .doSearch("webdriver")
+                .openTools()
+                .sortByTime()
+                .getLifetimeOfResultByPosition(1);
+
+        Assert.assertTrue(firstResultLifetime.contains("хвилин"), "First result should contain \"хвилин\"");
+        Assert.assertTrue(firstResultLifetime.contains("тому"), "First result should contain \"тому\"");
+    }
+
+    @Test
+    public void testFourteenthResultsPageContainsWebdriver() {
+        String searchTerm = "webdriver";
+
+        String fourteenthResultDescription = googleHomePage.open()
+                .doSearch(searchTerm)
+                .goToSearchResultPage(10)
+                .goToSearchResultPage(14)
+                .getResultDescriptionByPosition(1);
+
+        boolean doesResultDescriptionContainSearchTerm = Pattern.compile(Pattern.quote(searchTerm), Pattern.CASE_INSENSITIVE).matcher(fourteenthResultDescription).find();
+        Assert.assertTrue((doesResultDescriptionContainSearchTerm), "Result description should contain 'webdriver'");
     }
 }

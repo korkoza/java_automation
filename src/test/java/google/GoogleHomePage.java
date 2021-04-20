@@ -6,6 +6,7 @@ import static com.codeborne.selenide.Selenide.$x;
 import com.codeborne.selenide.Selenide;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 
 public class GoogleHomePage extends BasePage {
 
@@ -43,5 +44,9 @@ public class GoogleHomePage extends BasePage {
     public GoogleSearchResultPage iAmFeelingLucky() {
         $(By.name("btnI")).click();
         return Selenide.page(GoogleSearchResultPage.class);
+    }
+
+    public WebElement getLogo() {
+        return $x("//img[@class='lnXdpd']");
     }
 }
