@@ -179,7 +179,7 @@ public class FirstUITest extends TestRunner {
                 .open()
                 .doSearch("webdriver")
                 .openTools()
-                // Possible parameter values for filterResultsByTime method:
+                // Possible parameter values for filterResultsByPeriod method:
                 // Any time, Past hour, Past 24 hours, Past week, Past month, Past year, Custom range...
                 .filterResultsByPeriod("Past hour")
                 .getLifetimeOfResultByPosition(1);
