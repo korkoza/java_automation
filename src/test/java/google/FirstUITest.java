@@ -1,17 +1,13 @@
 package google;
 
 import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.WebDriverRunner;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
-import org.testng.Assert;
 import org.testng.annotations.*;
 
 import java.util.List;
-import java.util.regex.Pattern;
 
 import static java.lang.String.format;
-import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.*;
 
 public class FirstUITest extends TestRunner {
     public GoogleHomePage googleHomePage;
@@ -92,23 +88,23 @@ public class FirstUITest extends TestRunner {
         String searchButtonText = googleHomePage
                 .getSearchButtonText();
 
-        Assert.assertEquals(searchButtonText, "Пошук Google", format("Search button text should be \"%s\"", searchButtonText));
+        assertEquals(searchButtonText, "Пошук Google", format("Search button text should be \"%s\"", searchButtonText));
 
         String feelLuckyButtonText = googleHomePage
                 .getFeelLuckyButtonText();
 
-        Assert.assertEquals(feelLuckyButtonText, "Мені пощастить", format("Search button text should be \"%s\"", feelLuckyButtonText));
+        assertEquals(feelLuckyButtonText, "Мені пощастить", format("Search button text should be \"%s\"", feelLuckyButtonText));
 
         searchButtonText = googleHomePage
                 .switchLanguage("Eng")
                 .getSearchButtonText();
 
-        Assert.assertEquals(searchButtonText, "Google Search", format("Search button text should be \"%s\"", searchButtonText));
+        assertEquals(searchButtonText, "Google Search", format("Search button text should be \"%s\"", searchButtonText));
 
         feelLuckyButtonText = googleHomePage
                 .getFeelLuckyButtonText();
 
-        Assert.assertEquals(feelLuckyButtonText, "I'm Feeling Lucky", format("Search button text should be \"%s\"", feelLuckyButtonText));
+        assertEquals(feelLuckyButtonText, "I'm Feeling Lucky", format("Search button text should be \"%s\"", feelLuckyButtonText));
     }
 
     @Test
@@ -134,26 +130,24 @@ public class FirstUITest extends TestRunner {
         int quantityOfResultsOnPage = googleSearchResultPage
                 .getQuantityOfResultsOnPage();
 
-        Assert.assertEquals(quantityOfResultsOnPage, 10, "Page should contain 10 results");
+        assertEquals(quantityOfResultsOnPage, 10, "Page should contain 10 results");
 
         int currentPageNumber = googleSearchResultPage
                 .getCurrentPageNumber();
 
-        Assert.assertEquals(currentPageNumber, pageNumber, format("Page number should equal - %s", pageNumber));
+        assertEquals(currentPageNumber, pageNumber, format("Page number should equal - %s", pageNumber));
     }
 
     @Test
     public void testLogoVisibility() {
-        WebElement logo = googleHomePage.open()
+        WebElement logo = googleHomePage
+                .open()
                 .getLogo();
 
-        JavascriptExecutor js = (JavascriptExecutor) WebDriverRunner.getWebDriver();
-        js.executeScript("arguments[0].style.visibility='hidden'", logo);
+        WebElementUtils.hideElement(logo);
+        assertFalse(logo.isDisplayed(), "Logo should not be displayed");
 
-        Assert.assertFalse(logo.isDisplayed(), "Logo should not be displayed");
-
-        js.executeScript("arguments[0].style.visibility='visible'", logo);
-
+        WebElementUtils.showElement(logo);
         assertTrue(logo.isDisplayed(), "Logo should be displayed");
     }
 
@@ -176,16 +170,18 @@ public class FirstUITest extends TestRunner {
                 .goToBooksPage()
                 .getLinkTextByPosition(10);
 
-        boolean doesLastLinkContainSearchTerm = Pattern.compile(Pattern.quote(searchTerm), Pattern.CASE_INSENSITIVE).matcher(lastResultLink).find();
-        assertTrue(doesLastLinkContainSearchTerm, format("Last link should contain %s", searchTerm));
+        assertTrue(lastResultLink.contains(searchTerm), format("Last link should contain %s", searchTerm));
     }
 
     @Test
     public void testResultsSortedByTimeContain() {
-        String firstResultLifetime = googleHomePage.open()
+        String firstResultLifetime = googleHomePage
+                .open()
                 .doSearch("webdriver")
                 .openTools()
-                .sortByTime()
+                // Possible parameter values for filterResultsByTime method:
+                // Any time, Past hour, Past 24 hours, Past week, Past month, Past year, Custom range...
+                .filterResultsByPeriod("Past hour")
                 .getLifetimeOfResultByPosition(1);
 
         assertTrue(firstResultLifetime.contains("хвилин"), "First result should contain \"хвилин\"");
@@ -196,13 +192,13 @@ public class FirstUITest extends TestRunner {
     public void testFourteenthResultsPageContainsWebdriver() {
         String searchTerm = "webdriver";
 
-        String fourteenthResultDescription = googleHomePage.open()
+        String fourteenthResultDescription = googleHomePage
+                .open()
                 .doSearch(searchTerm)
                 .goToSearchResultPage(10)
                 .goToSearchResultPage(14)
                 .getResultDescriptionByPosition(1);
 
-        boolean doesResultDescriptionContainSearchTerm = Pattern.compile(Pattern.quote(searchTerm), Pattern.CASE_INSENSITIVE).matcher(fourteenthResultDescription).find();
-        assertTrue((doesResultDescriptionContainSearchTerm), "Result description should contain 'webdriver'");
+        assertTrue(fourteenthResultDescription.contains(searchTerm), format("Result description should contain '%s'", searchTerm));
     }
 }

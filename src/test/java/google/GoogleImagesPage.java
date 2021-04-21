@@ -2,6 +2,7 @@ package google;
 
 import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.$x;
+import static java.lang.String.format;
 
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Selenide;
@@ -15,7 +16,7 @@ public class GoogleImagesPage extends BasePage {
     }
 
     public String getImageText(int position) {
-        return $x(String.format("//div[@class='islrc']/div[%s]", position))
+        return $x(format("//div[@class='islrc']/div[%s]", position))
                 .getText();
     }
 

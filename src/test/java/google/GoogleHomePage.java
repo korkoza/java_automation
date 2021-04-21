@@ -2,6 +2,7 @@ package google;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$x;
+import static java.lang.String.format;
 
 import com.codeborne.selenide.Selenide;
 import org.openqa.selenium.By;
@@ -22,7 +23,7 @@ public class GoogleHomePage extends BasePage {
     }
 
     public GoogleHomePage switchLanguage(String lang) {
-        $x(String.format("//div[@id='SIvCob']/a[contains(text(),'%s')]", lang))
+        $x(format("//div[@id='SIvCob']/a[contains(text(),'%s')]", lang))
                 .click();
 
         return this;
