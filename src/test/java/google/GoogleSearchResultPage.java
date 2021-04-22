@@ -2,9 +2,12 @@ package google;
 
 import com.codeborne.selenide.CollectionCondition;
 
+import static com.codeborne.selenide.CollectionCondition.sizeGreaterThanOrEqual;
 import static com.codeborne.selenide.Condition.visible;
 
 import com.codeborne.selenide.Selenide;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.util.List;
 
@@ -39,6 +42,7 @@ public class GoogleSearchResultPage extends BasePage {
 
     public int getQuantityOfResultsOnPage() {
         return $$x("//div[@class='g']")
+                .shouldHave(sizeGreaterThanOrEqual(10))
                 .size();
     }
 
@@ -48,15 +52,12 @@ public class GoogleSearchResultPage extends BasePage {
     }
 
     public int getResultsQuantity() {
-        // locate results string which contains words, results quantity, time required to find results
-        String resultsStr = $(byId("result-stats"))
+        String resultsString = $(byId("result-stats"))
                 .getText();
-        // truncate query duration
-        resultsStr = resultsStr.substring(0, resultsStr.indexOf("("));
-        // extract digits
-        resultsStr = resultsStr.replaceAll("[^0-9]", "");
-        // convert to integer
-        return Integer.valueOf(resultsStr);
+
+        resultsString = resultsString.substring(0, resultsString.indexOf("("));
+        resultsString = resultsString.replaceAll("[^0-9]", "");
+        return Integer.valueOf(resultsString);
     }
 
     public GoogleBooksPage goToBooksPage() {
@@ -67,56 +68,32 @@ public class GoogleSearchResultPage extends BasePage {
         return Selenide.page(GoogleBooksPage.class);
     }
 
-    public GoogleSearchResultPage openTools() {
+    public GoogleSearchResultPage openToolsMenu() {
         $(byId("hdtb-tls"))
                 .click();
         return Selenide.page(GoogleSearchResultPage.class);
     }
 
-    public GoogleSearchResultPage filterResultsByPeriod(String timeUnit) {
-        int dropDownNumber = 0;
+    @AllArgsConstructor
+    @Getter
+    public enum FilterOption {
+        ANY_TIME(1), PAST_HOUR(2), PAST_24_HOURS(3), PAST_WEEK(4), PAST_MONTH(5), PAST_YEAR(6), CUSTOM_RANGE(7);
+        private final int locatorNumber;
+    }
 
-        switch (timeUnit) {
-            case "Any time":
-                dropDownNumber = 1;
-                break;
-            case "Past hour":
-                dropDownNumber = 2;
-                break;
-            case "Past 24 hours":
-                dropDownNumber = 3;
-                break;
-            case "Past week":
-                dropDownNumber = 4;
-                break;
-            case "Past month":
-                dropDownNumber = 5;
-                break;
-            case "Past year":
-                dropDownNumber = 6;
-                break;
-            case "Custom range...":
-                dropDownNumber = 7;
-                break;
-        }
-
+    public GoogleSearchResultPage filterResultsByPeriod(int locatorNumber) {
         $x("//div[@id='hdtbMenus']/span[2]/g-popup")
                 .click();
-        $x(format("//div[@id='lb']//g-menu-item[%s]", dropDownNumber))
+
+        $x(format("//div[@id='lb']//g-menu-item[%s]", locatorNumber))
                 .shouldBe(visible)
                 .click();
         return Selenide.page(GoogleSearchResultPage.class);
     }
 
     public String getLifetimeOfResultByPosition(int position) {
-        return $x(format("//div[@class='g'][1]//div[@class='fG8Fp uo4vr']", position))
+        return $x(format("//div[@class='g'][%s]//span[@class='f']", position))
                 .getText();
-    }
-
-    public GoogleSearchResultPage goToResultsPage(int page) {
-        $x(format("//a[@aria-label='Page %s']", page))
-                .click();
-        return Selenide.page(GoogleSearchResultPage.class);
     }
 
     public String getResultDescriptionByPosition(int position) {

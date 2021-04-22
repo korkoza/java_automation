@@ -1,7 +1,6 @@
 package google;
 
 import com.codeborne.selenide.Selenide;
-import org.openqa.selenium.WebElement;
 import org.testng.annotations.*;
 
 import java.util.List;
@@ -140,14 +139,17 @@ public class FirstUITest extends TestRunner {
 
     @Test
     public void testLogoVisibility() {
-        WebElement logo = googleHomePage
-                .getLogo();
+        boolean isLogoDisplayed = googleHomePage
+                .hideLogo()
+                .isLogoDisplayed();
 
-        WebElementUtils.hideElement(logo);
-        assertFalse(logo.isDisplayed(), "Logo should not be displayed");
+        assertFalse(isLogoDisplayed, "Logo should not be displayed");
 
-        WebElementUtils.showElement(logo);
-        assertTrue(logo.isDisplayed(), "Logo should be displayed");
+        isLogoDisplayed = googleHomePage
+                .showLogo()
+                .isLogoDisplayed();
+
+        assertTrue(isLogoDisplayed, "Logo should be displayed");
     }
 
     @Test
@@ -174,10 +176,8 @@ public class FirstUITest extends TestRunner {
     public void testResultsSortedByTimeContain() {
         String firstResultLifetime = googleHomePage
                 .doSearch("webdriver")
-                .openTools()
-                // Possible parameter values for filterResultsByPeriod method:
-                // Any time, Past hour, Past 24 hours, Past week, Past month, Past year, Custom range...
-                .filterResultsByPeriod("Past hour")
+                .openToolsMenu()
+                .filterResultsByPeriod(GoogleSearchResultPage.FilterOption.PAST_HOUR.getLocatorNumber())
                 .getLifetimeOfResultByPosition(1);
 
         assertTrue(firstResultLifetime.contains("хвилин"), "First result should contain \"хвилин\"");

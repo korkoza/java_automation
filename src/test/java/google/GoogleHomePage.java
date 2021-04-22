@@ -46,7 +46,19 @@ public class GoogleHomePage extends BasePage {
         return Selenide.page(GoogleSearchResultPage.class);
     }
 
-    public WebElement getLogo() {
-        return $x("//img[@class='lnXdpd']");
+    WebElement logo = $(By.id("hplogo"));
+
+    public GoogleHomePage hideLogo() {
+        WebElementUtil.hideElement(logo);
+        return Selenide.page(GoogleHomePage.class);
+    }
+
+    public GoogleHomePage showLogo() {
+        WebElementUtil.showElement(logo);
+        return Selenide.page(GoogleHomePage.class);
+    }
+
+    public boolean isLogoDisplayed() {
+        return logo.isDisplayed();
     }
 }
