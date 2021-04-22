@@ -10,7 +10,6 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 
 public class GoogleHomePage extends BasePage {
-
     public GoogleHomePage open() {
         Selenide.open("https://www.google.com/");
         return this;

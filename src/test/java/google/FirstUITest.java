@@ -141,7 +141,6 @@ public class FirstUITest extends TestRunner {
     @Test
     public void testLogoVisibility() {
         WebElement logo = googleHomePage
-                .open()
                 .getLogo();
 
         WebElementUtils.hideElement(logo);
@@ -154,7 +153,6 @@ public class FirstUITest extends TestRunner {
     @Test
     public void testResultsQuantity() {
         int resultsQuantity = googleHomePage
-                .open()
                 .doSearch("webdriver")
                 .getResultsQuantity();
 
@@ -165,7 +163,6 @@ public class FirstUITest extends TestRunner {
     public void testLastBookContainsSearchedTerm() {
         String searchTerm = "webdriver";
         String lastResultLink = googleHomePage
-                .open()
                 .doSearch(searchTerm)
                 .goToBooksPage()
                 .getLinkTextByPosition(10);
@@ -176,7 +173,6 @@ public class FirstUITest extends TestRunner {
     @Test
     public void testResultsSortedByTimeContain() {
         String firstResultLifetime = googleHomePage
-                .open()
                 .doSearch("webdriver")
                 .openTools()
                 // Possible parameter values for filterResultsByPeriod method:
@@ -193,7 +189,6 @@ public class FirstUITest extends TestRunner {
         String searchTerm = "webdriver";
 
         String fourteenthResultDescription = googleHomePage
-                .open()
                 .doSearch(searchTerm)
                 .goToSearchResultPage(10)
                 .goToSearchResultPage(14)
