@@ -177,7 +177,7 @@ public class FirstUITest extends TestRunner {
         String firstResultLifetime = googleHomePage
                 .doSearch("webdriver")
                 .openToolsMenu()
-                .filterResultsByPeriod(GoogleSearchResultPage.FilterOption.PAST_HOUR.getLocatorNumber())
+                .filterResultsByPeriod(GoogleSearchResultPage.FilterByCreatedTime.PAST_HOUR)
                 .getLifetimeOfResultByPosition(1);
 
         assertTrue(firstResultLifetime.contains("хвилин"), "First result should contain \"хвилин\"");

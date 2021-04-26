@@ -6,6 +6,7 @@ import static com.codeborne.selenide.CollectionCondition.sizeGreaterThanOrEqual;
 import static com.codeborne.selenide.Condition.visible;
 
 import com.codeborne.selenide.Selenide;
+import io.qameta.allure.Step;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -28,12 +29,14 @@ public class GoogleSearchResultPage extends BasePage {
                 .getText();
     }
 
+    @Step("Opened Images page")
     public GoogleImagesPage goToImagesPage() {
         $x("//div[@class='hdtb-mitem'][1]/a[@class='hide-focus-ring']")
                 .click();
         return Selenide.page(GoogleImagesPage.class);
     }
 
+    @Step("Opened results page #{pageNumber}")
     public GoogleSearchResultPage goToSearchResultPage(int pageNumber) {
         $x(format("//a[@aria-label='Page %s']", pageNumber))
                 .click();
@@ -60,6 +63,7 @@ public class GoogleSearchResultPage extends BasePage {
         return Integer.valueOf(resultsString);
     }
 
+    @Step("Opened Books page")
     public GoogleBooksPage goToBooksPage() {
         $x("//div[@id='hdtb-msb']//div[@class='GOE98c']")
                 .click();
@@ -68,6 +72,7 @@ public class GoogleSearchResultPage extends BasePage {
         return Selenide.page(GoogleBooksPage.class);
     }
 
+    @Step("Opened Tools menu")
     public GoogleSearchResultPage openToolsMenu() {
         $(byId("hdtb-tls"))
                 .click();
@@ -76,23 +81,24 @@ public class GoogleSearchResultPage extends BasePage {
 
     @AllArgsConstructor
     @Getter
-    public enum FilterOption {
+    public enum FilterByCreatedTime {
         ANY_TIME(1), PAST_HOUR(2), PAST_24_HOURS(3), PAST_WEEK(4), PAST_MONTH(5), PAST_YEAR(6), CUSTOM_RANGE(7);
         private final int locatorNumber;
     }
 
-    public GoogleSearchResultPage filterResultsByPeriod(int locatorNumber) {
+    @Step("Filtered results by created date {timeUnit}")
+    public GoogleSearchResultPage filterResultsByPeriod(FilterByCreatedTime timeUnit) {
         $x("//div[@id='hdtbMenus']/span[2]/g-popup")
                 .click();
 
-        $x(format("//div[@id='lb']//g-menu-item[%s]", locatorNumber))
+        $x(format("//div[@id='lb']//g-menu-item[%s]", timeUnit.locatorNumber))
                 .shouldBe(visible)
                 .click();
         return Selenide.page(GoogleSearchResultPage.class);
     }
 
     public String getLifetimeOfResultByPosition(int position) {
-        return $x(format("//div[@class='g'][%s]//span[@class='f']", position))
+        return $x(format("//div[@class='g'][1]//*[contains(text(),'тому')]", position))
                 .getText();
     }
 

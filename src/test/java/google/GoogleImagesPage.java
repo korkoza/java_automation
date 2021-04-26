@@ -6,6 +6,7 @@ import static java.lang.String.format;
 
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Selenide;
+import io.qameta.allure.Step;
 
 public class GoogleImagesPage extends BasePage {
 
@@ -20,6 +21,7 @@ public class GoogleImagesPage extends BasePage {
                 .getText();
     }
 
+    @Step("Navigated to Home page via clicking on the logo")
     public GoogleHomePage goToHomePageViaLogo() {
         $x("//div[@class='oDnpvd']//a")
                 .click();
