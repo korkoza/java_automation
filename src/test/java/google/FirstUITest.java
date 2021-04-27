@@ -1,10 +1,12 @@
 package google;
 
 import com.codeborne.selenide.Selenide;
-import org.testng.Assert;
 import org.testng.annotations.*;
 
 import java.util.List;
+
+import static java.lang.String.format;
+import static org.testng.Assert.*;
 
 public class FirstUITest extends TestRunner {
     public GoogleHomePage googleHomePage;
@@ -35,7 +37,7 @@ public class FirstUITest extends TestRunner {
             }
         }
 
-        Assert.assertTrue(doesResultContainText, String.format("Search result should contain \"%s\"", expectedTextInResult));
+        assertTrue(doesResultContainText, format("Search result should contain \"%s\"", expectedTextInResult));
     }
 
     @Test
@@ -46,7 +48,7 @@ public class FirstUITest extends TestRunner {
                 .doSearch(searchTerm)
                 .getLinkText(1);
 
-        Assert.assertTrue(firstResult.contains(searchTerm), String.format("The first result should contain \"%s\"", searchTerm));
+        assertTrue(firstResult.contains(searchTerm), format("The first result should contain \"%s\"", searchTerm));
     }
 
     @Test
@@ -59,7 +61,7 @@ public class FirstUITest extends TestRunner {
                 .getQuantityOfImages();
 
         int expectedQuantityOfImages = 10;
-        Assert.assertTrue(quantityOfImages >= expectedQuantityOfImages, String.format("Number of images should be greater or equal than %s", expectedQuantityOfImages));
+        assertTrue(quantityOfImages >= expectedQuantityOfImages, format("Number of images should be greater or equal than %s", expectedQuantityOfImages));
 
         String firstImageText = imagesPage
                 .getImageText(1);
@@ -68,14 +70,14 @@ public class FirstUITest extends TestRunner {
                 .getImageText(5);
 
         String expectedImageText = "Funny";
-        Assert.assertTrue(firstImageText.contains(expectedImageText), String.format("The first image should contain \"%s\"", expectedImageText));
-        Assert.assertTrue(fifthImageText.contains(expectedImageText), String.format("The fifth image should contain \"%s\"", expectedImageText));
+        assertTrue(firstImageText.contains(expectedImageText), format("The first image should contain \"%s\"", expectedImageText));
+        assertTrue(fifthImageText.contains(expectedImageText), format("The fifth image should contain \"%s\"", expectedImageText));
 
         String pageTitle = imagesPage
                 .goToHomePageViaLogo()
                 .getTitle();
 
-        Assert.assertTrue(pageTitle.equals("Google"), "Home page should be opened");
+        assertTrue(pageTitle.equals("Google"), "Home page should be opened");
     }
 
     @Test
@@ -85,23 +87,23 @@ public class FirstUITest extends TestRunner {
         String searchButtonText = googleHomePage
                 .getSearchButtonText();
 
-        Assert.assertEquals(searchButtonText, "Пошук Google", String.format("Search button text should be \"%s\"", searchButtonText));
+        assertEquals(searchButtonText, "Пошук Google", format("Search button text should be \"%s\"", searchButtonText));
 
         String feelLuckyButtonText = googleHomePage
                 .getFeelLuckyButtonText();
 
-        Assert.assertEquals(feelLuckyButtonText, "Мені пощастить", String.format("Search button text should be \"%s\"", feelLuckyButtonText));
+        assertEquals(feelLuckyButtonText, "Мені пощастить", format("Search button text should be \"%s\"", feelLuckyButtonText));
 
         searchButtonText = googleHomePage
                 .switchLanguage("Eng")
                 .getSearchButtonText();
 
-        Assert.assertEquals(searchButtonText, "Google Search", String.format("Search button text should be \"%s\"", searchButtonText));
+        assertEquals(searchButtonText, "Google Search", format("Search button text should be \"%s\"", searchButtonText));
 
         feelLuckyButtonText = googleHomePage
                 .getFeelLuckyButtonText();
 
-        Assert.assertEquals(feelLuckyButtonText, "I'm Feeling Lucky", String.format("Search button text should be \"%s\"", feelLuckyButtonText));
+        assertEquals(feelLuckyButtonText, "I'm Feeling Lucky", format("Search button text should be \"%s\"", feelLuckyButtonText));
     }
 
     @Test
@@ -113,7 +115,7 @@ public class FirstUITest extends TestRunner {
 
         String expectedText = "YouTube";
         boolean doesTitleContainText = title.contains(expectedText);
-        Assert.assertTrue(doesTitleContainText, String.format("Title should contain \"%s\"", expectedText));
+        assertTrue(doesTitleContainText, format("Title should contain \"%s\"", expectedText));
     }
 
     @Test
@@ -127,11 +129,71 @@ public class FirstUITest extends TestRunner {
         int quantityOfResultsOnPage = googleSearchResultPage
                 .getQuantityOfResultsOnPage();
 
-        Assert.assertEquals(quantityOfResultsOnPage, 10, "Page should contain 10 results");
+        assertEquals(quantityOfResultsOnPage, 10, "Page should contain 10 results");
 
         int currentPageNumber = googleSearchResultPage
                 .getCurrentPageNumber();
 
-        Assert.assertEquals(currentPageNumber, pageNumber, String.format("Page number should equal - %s", pageNumber));
+        assertEquals(currentPageNumber, pageNumber, format("Page number should equal - %s", pageNumber));
+    }
+
+    @Test
+    public void testLogoVisibility() {
+        boolean isLogoDisplayed = googleHomePage
+                .hideLogo()
+                .isLogoDisplayed();
+
+        assertFalse(isLogoDisplayed, "Logo should not be displayed");
+
+        isLogoDisplayed = googleHomePage
+                .showLogo()
+                .isLogoDisplayed();
+
+        assertTrue(isLogoDisplayed, "Logo should be displayed");
+    }
+
+    @Test
+    public void testResultsQuantity() {
+        int resultsQuantity = googleHomePage
+                .doSearch("webdriver")
+                .getResultsQuantity();
+
+        assertTrue(resultsQuantity > 5000000, "Results quantity should more than 5 000 000");
+    }
+
+    @Test
+    public void testLastBookContainsSearchedTerm() {
+        String searchTerm = "webdriver";
+        String lastResultLink = googleHomePage
+                .doSearch(searchTerm)
+                .goToBooksPage()
+                .getLinkTextByPosition(10);
+
+        assertTrue(lastResultLink.contains(searchTerm), format("Last link should contain %s", searchTerm));
+    }
+
+    @Test
+    public void testResultsSortedByTimeContain() {
+        String firstResultLifetime = googleHomePage
+                .doSearch("webdriver")
+                .openToolsMenu()
+                .filterResultsByPeriod(GoogleSearchResultPage.FilterByCreatedTime.PAST_HOUR)
+                .getLifetimeOfResultByPosition(1);
+
+        assertTrue(firstResultLifetime.contains("хвилин"), "First result should contain \"хвилин\"");
+        assertTrue(firstResultLifetime.contains("тому"), "First result should contain \"тому\"");
+    }
+
+    @Test
+    public void testFourteenthResultsPageContainsWebdriver() {
+        String searchTerm = "webdriver";
+
+        String fourteenthResultDescription = googleHomePage
+                .doSearch(searchTerm)
+                .goToSearchResultPage(10)
+                .goToSearchResultPage(14)
+                .getResultDescriptionByPosition(1);
+
+        assertTrue(fourteenthResultDescription.contains(searchTerm), format("Result description should contain '%s'", searchTerm));
     }
 }

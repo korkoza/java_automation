@@ -5,3 +5,6 @@ out/
 *.iml
 src/main/java/javaPractice
 build/
+allure-results
+.allure
+allure-report
