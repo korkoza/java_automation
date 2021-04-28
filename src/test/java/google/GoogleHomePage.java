@@ -10,6 +10,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 
+@Deprecated
 public class GoogleHomePage extends BasePage {
     @Step("Opened Google home page")
     public GoogleHomePage open() {

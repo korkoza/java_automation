@@ -8,6 +8,7 @@ import java.util.List;
 import static java.lang.String.format;
 import static org.testng.Assert.*;
 
+@Deprecated
 public class FirstUITest extends TestRunner {
     public GoogleHomePage googleHomePage;
 

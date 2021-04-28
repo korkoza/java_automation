@@ -8,6 +8,7 @@ import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Selenide;
 import io.qameta.allure.Step;
 
+@Deprecated
 public class GoogleImagesPage extends BasePage {
 
     public Integer getQuantityOfImages() {

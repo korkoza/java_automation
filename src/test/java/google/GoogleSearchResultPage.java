@@ -16,6 +16,7 @@ import static com.codeborne.selenide.Selectors.byId;
 import static com.codeborne.selenide.Selenide.*;
 import static java.lang.String.format;
 
+@Deprecated
 public class GoogleSearchResultPage extends BasePage {
 
     public List<String> getListOfResults() {

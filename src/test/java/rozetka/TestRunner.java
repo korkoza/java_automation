@@ -1,9 +1,8 @@
-package google;
+package rozetka;
 
 import com.codeborne.selenide.Configuration;
 import org.testng.annotations.BeforeClass;
 
-@Deprecated
 public class TestRunner {
     @BeforeClass
     public void configureBrowserSelenide() {
