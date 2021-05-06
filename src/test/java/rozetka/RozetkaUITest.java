@@ -12,7 +12,7 @@ import util.TestRunner;
 import static java.lang.String.format;
 import static org.testng.Assert.assertTrue;
 
-public class rozetkaUITest extends TestRunner {
+public class RozetkaUITest extends TestRunner {
     public HomePage homePage;
 
     @BeforeMethod
@@ -27,7 +27,7 @@ public class rozetkaUITest extends TestRunner {
 
     @Test
     public void testFirstProductTitleContainsSearchedTerm() {
-        var searchTerm = "смартфон";
+        var searchTerm = "телефон";
         int position = 1;
 
         var firstProductTitle = homePage
@@ -41,7 +41,7 @@ public class rozetkaUITest extends TestRunner {
     @Test
     public void testCategoryOpenedFromSideBarMenuDoesNotContainPopularProducts() {
         int categoryPopularProductsQuantity = homePage
-                .getSideBar()
+                .getSideBarCatalog()
                 .openCategoryPage(CategoryWithoutPopularProducts.GOODS_FOR_HOUSE)
                 .getPopularProductsQuantity();
 
@@ -51,7 +51,7 @@ public class rozetkaUITest extends TestRunner {
     @Test
     public void testCategoryOpenedFromSideBarMenuContainsPopularProducts() {
         int categoryPopularProductsQuantity = homePage
-                .getSideBar()
+                .getSideBarCatalog()
                 .openCategoryPage(CategoryWithPopularProducts.ALCOHOL_FOOD)
                 .getPopularProductsQuantity();
 

@@ -7,8 +7,12 @@ import static com.codeborne.selenide.Selenide.$$x;
 public class CategoryPage {
 
     public int getPopularProductsQuantity() {
-        return $$x("//rz-widget-goods//app-goods-tile-lite")
-                .shouldHave(CollectionCondition.sizeGreaterThan(0))
-                .size();
+        try {
+            return $$x("//rz-widget-goods//app-goods-tile-lite")
+                    .shouldHave(CollectionCondition.sizeGreaterThan(0))
+                    .size();
+        } catch (AssertionError e) {
+            return 0;
+        }
     }
 }

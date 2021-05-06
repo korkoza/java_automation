@@ -10,8 +10,4 @@ public enum CategoryWithPopularProducts implements ICategory {
     OFFICE_SCHOOL(13), ALCOHOL_FOOD(14);
 
     public final int categoryPosition;
-
-    public int getCategoryPosition() {
-        return categoryPosition;
-    }
 }

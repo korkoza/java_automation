@@ -10,7 +10,7 @@ import static java.lang.String.format;
 @Getter
 public class HomePage {
     private Header header = new Header();
-    private SideBar sideBar = new SideBar();
+    private SideBarCatalog sideBarCatalog = new SideBarCatalog();
 
     @Step("Opened the home page")
     public HomePage open() {

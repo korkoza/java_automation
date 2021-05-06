@@ -8,7 +8,7 @@ import page_objects.ICategory;
 import static com.codeborne.selenide.Selenide.$x;
 import static java.lang.String.format;
 
-public class SideBar {
+public class SideBarCatalog {
     @Step("Opened {category} from side bar menu")
     public CategoryPage openCategoryPage(ICategory category) {
         $x(format("//sidebar-fat-menu//li[%s]", category.getCategoryPosition())).click();

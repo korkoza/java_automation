@@ -9,8 +9,4 @@ public enum CategoryWithoutPopularProducts implements ICategory {
     SHOES_CLOTHES(10), BUSINESS(15), SERVICES(16);
 
     public final int categoryPosition;
-
-    public int getCategoryPosition() {
-        return categoryPosition;
-    }
 }
