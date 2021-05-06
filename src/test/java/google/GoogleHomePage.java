@@ -1,15 +1,16 @@
 package google;
 
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$x;
-import static java.lang.String.format;
-
 import com.codeborne.selenide.Selenide;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$x;
+import static java.lang.String.format;
+
+@Deprecated
 public class GoogleHomePage extends BasePage {
     @Step("Opened Google home page")
     public GoogleHomePage open() {

@@ -1,13 +1,16 @@
 package google;
 
 import com.codeborne.selenide.Selenide;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 import java.util.List;
 
 import static java.lang.String.format;
 import static org.testng.Assert.*;
 
+@Deprecated
 public class FirstUITest extends TestRunner {
     public GoogleHomePage googleHomePage;
 

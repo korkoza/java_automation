@@ -5,6 +5,7 @@ import org.openqa.selenium.WebElement;
 
 import static com.codeborne.selenide.Selenide.executeJavaScript;
 
+@Deprecated
 @UtilityClass
 public class WebElementUtil {
     public static void hideElement(WebElement element) {

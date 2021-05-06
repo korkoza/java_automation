@@ -17,7 +17,7 @@
         <selenide.version>5.20.1</selenide.version>
         <maven-surefire-plugin.version>2.20</maven-surefire-plugin.version>
         <aspectj.version>1.9.2</aspectj.version>
-        <allure-testng.version>2.13.2</allure-testng.version>
+        <allure-testng.version>2.13.9</allure-testng.version>
         <allure-maven.version>2.10.0</allure-maven.version>
         <allure-report.version>2.10.0</allure-report.version>
         <maven.compiler.plugin.version>3.8.0</maven.compiler.plugin.version>
@@ -45,13 +45,11 @@
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-api</artifactId>
             <version>${selenium.java.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.codeborne</groupId>
             <artifactId>selenide</artifactId>
             <version>${selenide.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.qameta.allure</groupId>
@@ -79,21 +77,9 @@
             <version>2.3.1</version>
         </dependency>
         <dependency>
-            <groupId>io.qameta.allure</groupId>
-            <artifactId>allure-maven</artifactId>
-            <version>${allure-maven.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>RELEASE</version>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 
