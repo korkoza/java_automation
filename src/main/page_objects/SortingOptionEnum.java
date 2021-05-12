@@ -5,8 +5,8 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum OrderingOption {
-    CHEAP("1: cheap"), EXPENSIVE("2: expensive"), POPULARITY ("3: popularity"),
+public enum SortingOptionEnum {
+    CHEAP("1: cheap"), EXPENSIVE("2: expensive"), POPULARITY("3: popularity"),
     NOVELTY("4: novelty"), SALE("5: action"), RANK("6: rank");
 
     private final String optionSelector;

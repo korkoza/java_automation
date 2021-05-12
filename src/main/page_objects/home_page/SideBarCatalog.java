@@ -2,7 +2,6 @@ package page_objects.home_page;
 
 import com.codeborne.selenide.Selenide;
 import io.qameta.allure.Step;
-import org.openqa.selenium.Keys;
 import page_objects.CategoryPage;
 import page_objects.ICategory;
 
@@ -16,7 +15,7 @@ public class SideBarCatalog {
     public CategoryPage openCategoryPage(ICategory category) {
         $x(format("//sidebar-fat-menu//li[%s]", category.getCategoryPosition())).click();
 
-        $(byName("search")).scrollTo();
+        $(byName("search")).hover();
 
         return Selenide.page(CategoryPage.class);
     }
