@@ -4,7 +4,9 @@ import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Selenide;
 import io.qameta.allure.Step;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.$x;
@@ -23,17 +25,13 @@ public class SubCategoryPage {
         return Selenide.page(SubCategoryPage.class);
     }
 
-    public ArrayList<Product> getAllProducts() {
+    public List<Product> getAllProducts() {
         int productsQuantity = $$x("//ul[@class='catalog-grid ng-star-inserted']/li")
                 .shouldHave(CollectionCondition.sizeGreaterThanOrEqual(60))
                 .size();
 
-        var productsList = new ArrayList<Product>();
-
-        for (int i = 1; i <= productsQuantity; i++) {
-            productsList.add(new Product(i));
-        }
-
-        return productsList;
+        return IntStream.rangeClosed(1, productsQuantity)
+                .mapToObj(number -> new Product(number))
+                .collect(Collectors.toList());
     }
 }

@@ -19,8 +19,8 @@ public class CategoryPage {
     }
 
     @Step("Opened subcategory {locator}")
-    public SubCategoryPage openSubCategory(SubCategoryEnum locator) {
-        $x(locator.getSubCategoryLocator())
+    public SubCategoryPage openSubCategory(SubCategoryEnum subCategory) {
+        $x(subCategory.getSubCategoryLocator())
                 .scrollTo()
                 .click();
         return Selenide.page(SubCategoryPage.class);

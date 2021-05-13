@@ -1,6 +1,7 @@
 package rozetka;
 
 import com.codeborne.selenide.Selenide;
+import com.google.common.collect.Ordering;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -10,6 +11,7 @@ import page_objects.SubCategoryEnum;
 import page_objects.home_page.HomePage;
 import util.TestRunner;
 
+import static java.util.stream.Collectors.toList;
 import static org.testng.Assert.assertTrue;
 
 public class ProductsSortingTest extends TestRunner {
@@ -34,14 +36,11 @@ public class ProductsSortingTest extends TestRunner {
                 .sortProducts(SortingOptionEnum.CHEAP)
                 .getAllProducts();
 
-        var areProductsSortedByPriceAsc = true;
+        var productPricesList = productsList.stream()
+                .map(product -> product.getPrice())
+                .collect(toList());
 
-        for (int i = 0; i < productsList.size() - 1; i++) {
-            if (productsList.get(i).getPrice() > productsList.get(i + 1).getPrice()) {
-                areProductsSortedByPriceAsc = false;
-                break;
-            }
-        }
+        var areProductsSortedByPriceAsc = Ordering.natural().isOrdered(productPricesList);
 
         assertTrue(areProductsSortedByPriceAsc, "Products should be sorted from cheap to expensive");
     }
@@ -55,14 +54,11 @@ public class ProductsSortingTest extends TestRunner {
                 .sortProducts(SortingOptionEnum.EXPENSIVE)
                 .getAllProducts();
 
-        var areProductsSortedByPriceDesc = true;
+        var productPricesList = productsList.stream()
+                .map(product -> product.getPrice())
+                .collect(toList());
 
-        for (int i = 0; i < productsList.size() - 1; i++) {
-            if (productsList.get(i).getPrice() < productsList.get(i + 1).getPrice()) {
-                areProductsSortedByPriceDesc = false;
-                break;
-            }
-        }
+        var areProductsSortedByPriceDesc = Ordering.natural().reverse().isOrdered(productPricesList);
 
         assertTrue(areProductsSortedByPriceDesc, "Products should be sorted from expensive to cheap");
     }
@@ -76,25 +72,13 @@ public class ProductsSortingTest extends TestRunner {
                 .sortProducts(SortingOptionEnum.POPULARITY)
                 .getAllProducts();
 
-        var areProductsSortedByPopularity = true;
+        var productTopSalesList = productsList
+                .stream()
+                .map(product -> product.isTopSale())
+                .map(product -> product ? 1 : 0)
+                .collect(toList());
 
-        for (int i = 0; i < productsList.size() - 1; i++) {
-            if (!productsList.get(0).isTopSale()) {
-                areProductsSortedByPopularity = false;
-                break;
-            }
-            if (!(productsList.get(i).isTopSale() && productsList.get(i + 1).isTopSale())) {
-                for (int j = i + 1; j < productsList.size() - 1; j++) {
-                    if (productsList.get(j).isTopSale() || productsList.get(j + 1).isTopSale()) {
-                        areProductsSortedByPopularity = false;
-                        break;
-                    }
-                }
-            }
-            if (!areProductsSortedByPopularity) {
-                break;
-            }
-        }
+        var areProductsSortedByPopularity = Ordering.natural().reverse().isOrdered(productTopSalesList);
 
         assertTrue(areProductsSortedByPopularity, "Products should be sorted by popularity");
     }
@@ -108,25 +92,13 @@ public class ProductsSortingTest extends TestRunner {
                 .sortProducts(SortingOptionEnum.NOVELTY)
                 .getAllProducts();
 
-        var areProductsSortedByNovelty = true;
+        var productNoveltyList = productsList
+                .stream()
+                .map(product -> product.isNovelty())
+                .map(product -> product ? 1 : 0)
+                .collect(toList());
 
-        for (int i = 0; i < productsList.size() - 1; i++) {
-            if (!productsList.get(0).isNovelty()) {
-                areProductsSortedByNovelty = false;
-                break;
-            }
-            if (!(productsList.get(i).isNovelty() && productsList.get(i + 1).isNovelty())) {
-                for (int j = i + 1; j < productsList.size() - 1; j++) {
-                    if (productsList.get(j).isNovelty() || productsList.get(j + 1).isNovelty()) {
-                        areProductsSortedByNovelty = false;
-                        break;
-                    }
-                }
-            }
-            if (!areProductsSortedByNovelty) {
-                break;
-            }
-        }
+        var areProductsSortedByNovelty = Ordering.natural().reverse().isOrdered(productNoveltyList);
 
         assertTrue(areProductsSortedByNovelty, "Products should be sorted by Novelty");
     }
