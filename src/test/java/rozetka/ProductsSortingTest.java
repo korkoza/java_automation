@@ -6,8 +6,8 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import page_objects.CategoryWithPopularProducts;
-import page_objects.SortingOptionEnum;
-import page_objects.SubCategoryEnum;
+import page_objects.SortingOption;
+import page_objects.SubCategory;
 import page_objects.home_page.HomePage;
 import util.TestRunner;
 
@@ -32,15 +32,17 @@ public class ProductsSortingTest extends TestRunner {
         var productsList = homePage
                 .getSideBarCatalog()
                 .openCategoryPage(CategoryWithPopularProducts.GARDEN)
-                .openSubCategory(SubCategoryEnum.PLANTS)
-                .sortProducts(SortingOptionEnum.CHEAP)
+                .openSubCategory(SubCategory.PLANTS)
+                .sortProducts(SortingOption.CHEAP)
                 .getAllProducts();
 
         var productPricesList = productsList.stream()
                 .map(product -> product.getPrice())
                 .collect(toList());
 
-        var areProductsSortedByPriceAsc = Ordering.natural().isOrdered(productPricesList);
+        var areProductsSortedByPriceAsc = Ordering
+                .natural()
+                .isOrdered(productPricesList);
 
         assertTrue(areProductsSortedByPriceAsc, "Products should be sorted from cheap to expensive");
     }
@@ -50,15 +52,18 @@ public class ProductsSortingTest extends TestRunner {
         var productsList = homePage
                 .getSideBarCatalog()
                 .openCategoryPage(CategoryWithPopularProducts.GARDEN)
-                .openSubCategory(SubCategoryEnum.PLANTS)
-                .sortProducts(SortingOptionEnum.EXPENSIVE)
+                .openSubCategory(SubCategory.PLANTS)
+                .sortProducts(SortingOption.EXPENSIVE)
                 .getAllProducts();
 
         var productPricesList = productsList.stream()
                 .map(product -> product.getPrice())
                 .collect(toList());
 
-        var areProductsSortedByPriceDesc = Ordering.natural().reverse().isOrdered(productPricesList);
+        var areProductsSortedByPriceDesc = Ordering
+                .natural()
+                .reverse()
+                .isOrdered(productPricesList);
 
         assertTrue(areProductsSortedByPriceDesc, "Products should be sorted from expensive to cheap");
     }
@@ -68,8 +73,8 @@ public class ProductsSortingTest extends TestRunner {
         var productsList = homePage
                 .getSideBarCatalog()
                 .openCategoryPage(CategoryWithPopularProducts.GARDEN)
-                .openSubCategory(SubCategoryEnum.WATERING_CANS)
-                .sortProducts(SortingOptionEnum.POPULARITY)
+                .openSubCategory(SubCategory.WATERING_CANS)
+                .sortProducts(SortingOption.POPULARITY)
                 .getAllProducts();
 
         var productTopSalesList = productsList
@@ -78,7 +83,10 @@ public class ProductsSortingTest extends TestRunner {
                 .map(product -> product ? 1 : 0)
                 .collect(toList());
 
-        var areProductsSortedByPopularity = Ordering.natural().reverse().isOrdered(productTopSalesList);
+        var areProductsSortedByPopularity = Ordering
+                .natural()
+                .reverse()
+                .isOrdered(productTopSalesList);
 
         assertTrue(areProductsSortedByPopularity, "Products should be sorted by popularity");
     }
@@ -88,8 +96,8 @@ public class ProductsSortingTest extends TestRunner {
         var productsList = homePage
                 .getSideBarCatalog()
                 .openCategoryPage(CategoryWithPopularProducts.PC)
-                .openSubCategory(SubCategoryEnum.NOTEBOOKS)
-                .sortProducts(SortingOptionEnum.NOVELTY)
+                .openSubCategory(SubCategory.NOTEBOOKS)
+                .sortProducts(SortingOption.NOVELTY)
                 .getAllProducts();
 
         var productNoveltyList = productsList
@@ -98,7 +106,10 @@ public class ProductsSortingTest extends TestRunner {
                 .map(product -> product ? 1 : 0)
                 .collect(toList());
 
-        var areProductsSortedByNovelty = Ordering.natural().reverse().isOrdered(productNoveltyList);
+        var areProductsSortedByNovelty = Ordering
+                .natural()
+                .reverse()
+                .isOrdered(productNoveltyList);
 
         assertTrue(areProductsSortedByNovelty, "Products should be sorted by Novelty");
     }

@@ -14,7 +14,7 @@ import static java.lang.String.format;
 
 public class SubCategoryPage {
     @Step("Sorted products by {option}")
-    public SubCategoryPage sortProducts(SortingOptionEnum option) {
+    public SubCategoryPage sortProducts(SortingOption option) {
         $x("//rz-sort/select")
                 .scrollTo()
                 .click();
@@ -27,7 +27,7 @@ public class SubCategoryPage {
 
     public List<Product> getAllProducts() {
         int productsQuantity = $$x("//ul[@class='catalog-grid ng-star-inserted']/li")
-                .shouldHave(CollectionCondition.sizeGreaterThanOrEqual(60))
+                .shouldHave(CollectionCondition.sizeGreaterThanOrEqual(5))
                 .size();
 
         return IntStream.rangeClosed(1, productsQuantity)

@@ -19,7 +19,7 @@ public class CategoryPage {
     }
 
     @Step("Opened subcategory {locator}")
-    public SubCategoryPage openSubCategory(SubCategoryEnum subCategory) {
+    public SubCategoryPage openSubCategory(SubCategory subCategory) {
         $x(subCategory.getSubCategoryLocator())
                 .scrollTo()
                 .click();

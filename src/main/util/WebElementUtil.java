@@ -1,13 +1,15 @@
 package util;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
-import org.openqa.selenium.NoSuchElementException;
+
+import java.time.Duration;
 
 public class WebElementUtil {
     public static boolean doesElementExist(SelenideElement element) {
         try {
-            return element.exists();
-        } catch (NoSuchElementException e) {
+            return element.should(Condition.exist, Duration.ofMillis(100)).exists();
+        } catch (AssertionError e) {
             return false;
         }
     }
