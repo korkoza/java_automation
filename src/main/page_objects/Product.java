@@ -12,6 +12,8 @@ public class Product {
     private final boolean isNovelty;
     private final String title;
     private final int price;
+    private final boolean isAvailable;
+    private final String description;
 
     public Product(int position) {
         this.title = $x(format("//ul[@class='catalog-grid ng-star-inserted']/li[%s]//span[@class='goods-tile__title']",
@@ -23,5 +25,9 @@ public class Product {
                 "li[%s]//span[contains((@class),'popularity')]", position)));
         this.isNovelty = WebElementUtil.doesElementExist($x(format("//ul[@class='catalog-grid ng-star-inserted']/" +
                 "li[%s]//span[contains((@class),'novelty')]", position)));
+        this.isAvailable = WebElementUtil.doesElementExist($x(format("//ul[@class='catalog-grid ng-star-inserted']" +
+                "/li[%s]//div[contains(@class,'availability--available')]", position)));
+        this.description = $x(format("//ul[@class='catalog-grid ng-star-inserted']/li[%s]//" +
+                "p[contains(@class, 'description')]", position)).getOwnText();
     }
 }
