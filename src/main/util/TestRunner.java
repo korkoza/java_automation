@@ -8,6 +8,6 @@ public class TestRunner {
     public void configureBrowserSelenide() {
         Configuration.browser = "chrome";
         Configuration.startMaximized = true;
-        Configuration.timeout = 10000;
+        Configuration.timeout = 40000;
     }
 }

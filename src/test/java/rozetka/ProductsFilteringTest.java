@@ -6,12 +6,12 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import page_objects.CategoryWithPopularProducts;
 import page_objects.Product;
-import page_objects.subcategory_page.FilterSectionEnum;
-import page_objects.subcategory_page.FiltersSideBar;
-import page_objects.subcategory_page.SubCategoryEnum;
+import page_objects.ProductWithDescription;
+import page_objects.subcategory_page.SubCategory;
 import page_objects.home_page.HomePage;
 import util.TestRunner;
 
+import static java.lang.String.format;
 import static org.testng.Assert.assertTrue;
 
 public class ProductsFilteringTest extends TestRunner {
@@ -28,53 +28,60 @@ public class ProductsFilteringTest extends TestRunner {
     }
 
     @Test
-    public void testFilteringByAvailability() {
-        var productsList = homePage
+    public void testFilteringByDisplayType() {
+        String filterName = "IPS";
+        String filterLocator = "36519=48784";
+
+        var filteredProductsList = homePage
                 .getSideBarCatalog()
                 .openCategoryPage(CategoryWithPopularProducts.PC)
-                .openSubCategory(SubCategoryEnum.NOTEBOOKS)
+                .openSubCategory(SubCategory.NOTEBOOKS)
                 .getFiltersSideBar()
-                .filterByAvailability()
+                .filterByFilterName(filterLocator)
                 .getCatalogGrid()
-                .getAllProducts();
-
-        boolean areProductsFilteredByAvailability = true;
-
-        for(Product product: productsList){
-            if (!product.isAvailable()) {
-                areProductsFilteredByAvailability = false;
-                break;
-            }
-        }
-
-        assertTrue(areProductsFilteredByAvailability, "Products should be filtered by availability");
-    }
-
-    @Test
-    public void testFilterByDisplayType() {
-        FilterSectionEnum filterName = FilterSectionEnum.DISPLAY_TYPE;
-        int position = 8;
-
-        var filteredProductList =homePage
-                .getSideBarCatalog()
-                .openCategoryPage(CategoryWithPopularProducts.PC)
-                .openSubCategory(SubCategoryEnum.NOTEBOOKS)
-                .getFiltersSideBar()
-                .filterByFilterName(filterName, position)
-                .getCatalogGrid()
-                .getAllProducts();
-
-        String selectedFilterValue = FiltersSideBar.getSelectedFilterValue(filterName, position);
+                .getAllProductsWithDescription();
 
         boolean areProductsFilteredByDisplayType = true;
 
-        for (Product product: filteredProductList) {
-            if (!product.getDescription().contains(selectedFilterValue)) {
+        for (ProductWithDescription product : filteredProductsList) {
+            if (!product.getDescription().contains(filterName)) {
                 areProductsFilteredByDisplayType = false;
                 break;
             }
         }
 
-        assertTrue(areProductsFilteredByDisplayType, "Products should be filtered by display type");
+        assertTrue(areProductsFilteredByDisplayType,
+                format("Products should be filtered by %s display type", filterName));
+    }
+
+    @Test
+    public void testFilteringByPrice() {
+        int minPrice = 2500;
+        int maxPrice = 4000;
+
+        var filteredProductList = homePage
+                .getSideBarCatalog()
+                .openCategoryPage(CategoryWithPopularProducts.PC)
+                .openSubCategory(SubCategory.NOTEBOOKS)
+                .getFiltersSideBar()
+                .filterByPrice(Integer.toString(minPrice), Integer.toString(maxPrice))
+                .getCatalogGrid()
+                .getAllProductsWithoutDescription();
+
+        boolean areProductsFilteredByPrice = true;
+
+        for (Product product : filteredProductList) {
+            if (product.getPrice() < minPrice || product.getPrice() > maxPrice) {
+                areProductsFilteredByPrice = false;
+                break;
+            }
+        }
+
+        for (Product product : filteredProductList) {
+            System.out.println(product.getPrice());
+        }
+
+        assertTrue(areProductsFilteredByPrice, format("Products should be filtered by specified price range," +
+                " [%s - %s]", minPrice, maxPrice));
     }
 }

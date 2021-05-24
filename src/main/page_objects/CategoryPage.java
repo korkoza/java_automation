@@ -3,7 +3,7 @@ package page_objects;
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Selenide;
 import io.qameta.allure.Step;
-import page_objects.subcategory_page.SubCategoryEnum;
+import page_objects.subcategory_page.SubCategory;
 import page_objects.subcategory_page.SubCategoryPage;
 
 import static com.codeborne.selenide.Selenide.*;
@@ -21,7 +21,7 @@ public class CategoryPage {
     }
 
     @Step("Opened subcategory {locator}")
-    public SubCategoryPage openSubCategory(SubCategoryEnum subCategory) {
+    public SubCategoryPage openSubCategory(SubCategory subCategory) {
         $x(subCategory.getSubCategoryLocator())
                 .scrollTo()
                 .click();

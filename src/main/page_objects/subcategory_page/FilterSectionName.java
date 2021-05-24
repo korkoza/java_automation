@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum FilterSectionEnum {
+public enum FilterSectionName {
     READY_TO_SHIP("gotovo-k-otpravke"), PRODUCER("producer"), PRICE("price"),
     DISPLAY_TYPE("36519");
 

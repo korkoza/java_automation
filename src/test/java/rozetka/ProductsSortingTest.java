@@ -6,8 +6,8 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import page_objects.CategoryWithPopularProducts;
-import page_objects.SortingOptionEnum;
-import page_objects.subcategory_page.SubCategoryEnum;
+import page_objects.SortingOption;
+import page_objects.subcategory_page.SubCategory;
 import page_objects.home_page.HomePage;
 import util.TestRunner;
 
@@ -32,19 +32,22 @@ public class ProductsSortingTest extends TestRunner {
         var productsList = homePage
                 .getSideBarCatalog()
                 .openCategoryPage(CategoryWithPopularProducts.GARDEN)
-                .openSubCategory(SubCategoryEnum.PLANTS)
+                .openSubCategory(SubCategory.PLANTS)
                 .getCatalogSettings()
-                .sortProducts(SortingOptionEnum.CHEAP)
+                .sortProducts(SortingOption.CHEAP)
                 .getCatalogGrid()
-                .getAllProducts();
+                .getAllProductsWithoutDescription();
 
-        var productPricesList = productsList.stream()
+        var productPricesList = productsList
+                .stream()
                 .map(product -> product.getPrice())
                 .collect(toList());
 
-        var areProductsSortedByPriceAsc = Ordering.natural().isOrdered(productPricesList);
+        var areProductsSortedByPriceAsc = Ordering
+                .natural()
+                .isOrdered(productPricesList);
 
-        assertTrue(areProductsSortedByPriceAsc, "CatalogGrid should be sorted from cheap to expensive");
+        assertTrue(areProductsSortedByPriceAsc, "Products should be sorted from cheap to expensive");
     }
 
     @Test
@@ -52,19 +55,23 @@ public class ProductsSortingTest extends TestRunner {
         var productsList = homePage
                 .getSideBarCatalog()
                 .openCategoryPage(CategoryWithPopularProducts.GARDEN)
-                .openSubCategory(SubCategoryEnum.PLANTS)
+                .openSubCategory(SubCategory.PLANTS)
                 .getCatalogSettings()
-                .sortProducts(SortingOptionEnum.EXPENSIVE)
+                .sortProducts(SortingOption.EXPENSIVE)
                 .getCatalogGrid()
-                .getAllProducts();
+                .getAllProductsWithoutDescription();
 
-        var productPricesList = productsList.stream()
+        var productPricesList = productsList
+                .stream()
                 .map(product -> product.getPrice())
                 .collect(toList());
 
-        var areProductsSortedByPriceDesc = Ordering.natural().reverse().isOrdered(productPricesList);
+        var areProductsSortedByPriceDesc = Ordering
+                .natural()
+                .reverse()
+                .isOrdered(productPricesList);
 
-        assertTrue(areProductsSortedByPriceDesc, "CatalogGrid should be sorted from expensive to cheap");
+        assertTrue(areProductsSortedByPriceDesc, "Products should be sorted from expensive to cheap");
     }
 
     @Test
@@ -72,11 +79,11 @@ public class ProductsSortingTest extends TestRunner {
         var productsList = homePage
                 .getSideBarCatalog()
                 .openCategoryPage(CategoryWithPopularProducts.GARDEN)
-                .openSubCategory(SubCategoryEnum.WATERING_CANS)
+                .openSubCategory(SubCategory.WATERING_CANS)
                 .getCatalogSettings()
-                .sortProducts(SortingOptionEnum.POPULARITY)
+                .sortProducts(SortingOption.POPULARITY)
                 .getCatalogGrid()
-                .getAllProducts();
+                .getAllProductsWithoutDescription();
 
         var productTopSalesList = productsList
                 .stream()
@@ -84,9 +91,14 @@ public class ProductsSortingTest extends TestRunner {
                 .map(product -> product ? 1 : 0)
                 .collect(toList());
 
-        var areProductsSortedByPopularity = Ordering.natural().reverse().isOrdered(productTopSalesList);
+        System.out.println(productTopSalesList);
 
-        assertTrue(areProductsSortedByPopularity, "CatalogGrid should be sorted by popularity");
+        var areProductsSortedByPopularity = Ordering
+                .natural()
+                .reverse()
+                .isOrdered(productTopSalesList);
+
+        assertTrue(areProductsSortedByPopularity, "Products should be sorted by popularity");
     }
 
     @Test
@@ -94,11 +106,11 @@ public class ProductsSortingTest extends TestRunner {
         var productsList = homePage
                 .getSideBarCatalog()
                 .openCategoryPage(CategoryWithPopularProducts.PC)
-                .openSubCategory(SubCategoryEnum.NOTEBOOKS)
+                .openSubCategory(SubCategory.NOTEBOOKS)
                 .getCatalogSettings()
-                .sortProducts(SortingOptionEnum.NOVELTY)
+                .sortProducts(SortingOption.NOVELTY)
                 .getCatalogGrid()
-                .getAllProducts();
+                .getAllProductsWithoutDescription();
 
         var productNoveltyList = productsList
                 .stream()
@@ -106,8 +118,11 @@ public class ProductsSortingTest extends TestRunner {
                 .map(product -> product ? 1 : 0)
                 .collect(toList());
 
-        var areProductsSortedByNovelty = Ordering.natural().reverse().isOrdered(productNoveltyList);
+        var areProductsSortedByNovelty = Ordering
+                .natural()
+                .reverse()
+                .isOrdered(productNoveltyList);
 
-        assertTrue(areProductsSortedByNovelty, "CatalogGrid should be sorted by Novelty");
+        assertTrue(areProductsSortedByNovelty, "Products should be sorted by Novelty");
     }
 }
