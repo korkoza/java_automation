@@ -77,10 +77,6 @@ public class ProductsFilteringTest extends TestRunner {
             }
         }
 
-        for (Product product : filteredProductList) {
-            System.out.println(product.getPrice());
-        }
-
         assertTrue(areProductsFilteredByPrice, format("Products should be filtered by specified price range," +
                 " [%s - %s]", minPrice, maxPrice));
     }
