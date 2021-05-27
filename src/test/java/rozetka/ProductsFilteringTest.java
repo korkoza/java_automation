@@ -30,14 +30,13 @@ public class ProductsFilteringTest extends TestRunner {
     @Test
     public void testFilteringByDisplayType() {
         String filterName = "IPS";
-        String filterLocator = "36519=48784";
 
         var filteredProductsList = homePage
                 .getSideBarCatalog()
                 .openCategoryPage(CategoryWithPopularProducts.PC)
                 .openSubCategory(SubCategory.NOTEBOOKS)
                 .getFiltersSideBar()
-                .filterByFilterName(filterLocator)
+                .filterByFilterName(filterName)
                 .getCatalogGrid()
                 .getAllProductsWithDescription();
 
@@ -64,7 +63,7 @@ public class ProductsFilteringTest extends TestRunner {
                 .openCategoryPage(CategoryWithPopularProducts.PC)
                 .openSubCategory(SubCategory.NOTEBOOKS)
                 .getFiltersSideBar()
-                .filterByPrice(Integer.toString(minPrice), Integer.toString(maxPrice))
+                .filterByPrice(minPrice, maxPrice)
                 .getCatalogGrid()
                 .getAllProductsWithoutDescription();
 

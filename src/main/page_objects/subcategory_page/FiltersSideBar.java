@@ -9,21 +9,23 @@ import static java.lang.String.format;
 
 public class FiltersSideBar {
     @Step("Filtered products by {filterName}")
-    public SubCategoryPage filterByFilterName(String filterLocator) {
-        $x(format("//a[contains(@href, '%s')]", filterLocator)).click();
+    public SubCategoryPage filterByFilterName(String filterName) {
+        $x(format("//input[@id='%s']//..", filterName)).click();
 
         return Selenide.page(SubCategoryPage.class);
     }
 
     @Step("Filtered products by price range [{minPrice} - {maxPrice}]")
-    public SubCategoryPage filterByPrice(String minPrice, String maxPrice) {
-        $x("//input[@formcontrolname='min']")
-                .doubleClick()
-                .sendKeys(minPrice);
+    public SubCategoryPage filterByPrice(int minPrice, int maxPrice) {
+        var minPriceInputField = $x("//input[@formcontrolname='min']");
 
-        $x("//input[@formcontrolname='max']")
-                .doubleClick()
-                .sendKeys(maxPrice, Keys.ENTER);
+        minPriceInputField.clear();
+        minPriceInputField.sendKeys(Integer.toString(minPrice));
+
+        var maxPriceInputField = $x("//input[@formcontrolname='max']");
+
+        maxPriceInputField.clear();
+        maxPriceInputField.sendKeys(Integer.toString(maxPrice), Keys.ENTER);
 
         return Selenide.page(SubCategoryPage.class);
     }
