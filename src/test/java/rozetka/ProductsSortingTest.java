@@ -91,8 +91,6 @@ public class ProductsSortingTest extends TestRunner {
                 .map(product -> product ? 1 : 0)
                 .collect(toList());
 
-        System.out.println(productTopSalesList);
-
         var areProductsSortedByPopularity = Ordering
                 .natural()
                 .reverse()
