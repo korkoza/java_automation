@@ -3,6 +3,8 @@ package page_objects;
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Selenide;
 import io.qameta.allure.Step;
+import page_objects.subcategory_page.SubCategory;
+import page_objects.subcategory_page.SubCategoryPage;
 
 import static com.codeborne.selenide.Selenide.*;
 

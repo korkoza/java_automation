@@ -1,4 +1,4 @@
-package page_objects;
+package page_objects.subcategory_page;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -3,13 +3,10 @@ package page_objects.home_page;
 import com.codeborne.selenide.Selenide;
 import io.qameta.allure.Step;
 import lombok.*;
-
-
-import static java.lang.String.format;
+import page_objects.base_page.BasePage;
 
 @Getter
-public class HomePage {
-    private Header header = new Header();
+public class HomePage extends BasePage {
     private SideBarCatalog sideBarCatalog = new SideBarCatalog();
 
     @Step("Opened the home page")

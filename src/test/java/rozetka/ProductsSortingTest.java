@@ -7,7 +7,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import page_objects.CategoryWithPopularProducts;
 import page_objects.SortingOption;
-import page_objects.SubCategory;
+import page_objects.subcategory_page.SubCategory;
 import page_objects.home_page.HomePage;
 import util.TestRunner;
 
@@ -33,10 +33,13 @@ public class ProductsSortingTest extends TestRunner {
                 .getSideBarCatalog()
                 .openCategoryPage(CategoryWithPopularProducts.GARDEN)
                 .openSubCategory(SubCategory.PLANTS)
+                .getCatalogSettings()
                 .sortProducts(SortingOption.CHEAP)
-                .getAllProducts();
+                .getCatalogGrid()
+                .getAllProductsWithoutDescription();
 
-        var productPricesList = productsList.stream()
+        var productPricesList = productsList
+                .stream()
                 .map(product -> product.getPrice())
                 .collect(toList());
 
@@ -53,10 +56,13 @@ public class ProductsSortingTest extends TestRunner {
                 .getSideBarCatalog()
                 .openCategoryPage(CategoryWithPopularProducts.GARDEN)
                 .openSubCategory(SubCategory.PLANTS)
+                .getCatalogSettings()
                 .sortProducts(SortingOption.EXPENSIVE)
-                .getAllProducts();
+                .getCatalogGrid()
+                .getAllProductsWithoutDescription();
 
-        var productPricesList = productsList.stream()
+        var productPricesList = productsList
+                .stream()
                 .map(product -> product.getPrice())
                 .collect(toList());
 
@@ -74,8 +80,10 @@ public class ProductsSortingTest extends TestRunner {
                 .getSideBarCatalog()
                 .openCategoryPage(CategoryWithPopularProducts.GARDEN)
                 .openSubCategory(SubCategory.WATERING_CANS)
+                .getCatalogSettings()
                 .sortProducts(SortingOption.POPULARITY)
-                .getAllProducts();
+                .getCatalogGrid()
+                .getAllProductsWithoutDescription();
 
         var productTopSalesList = productsList
                 .stream()
@@ -97,8 +105,10 @@ public class ProductsSortingTest extends TestRunner {
                 .getSideBarCatalog()
                 .openCategoryPage(CategoryWithPopularProducts.PC)
                 .openSubCategory(SubCategory.NOTEBOOKS)
+                .getCatalogSettings()
                 .sortProducts(SortingOption.NOVELTY)
-                .getAllProducts();
+                .getCatalogGrid()
+                .getAllProductsWithoutDescription();
 
         var productNoveltyList = productsList
                 .stream()
