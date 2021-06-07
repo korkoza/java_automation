@@ -10,6 +10,6 @@ public class TestRunner {
     public void configureBrowserSelenide(String browser) {
         Configuration.browser = browser;
         Configuration.startMaximized = true;
-        Configuration.timeout = 10000;
+        Configuration.timeout = 60000;
     }
 }
