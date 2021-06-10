@@ -1,0 +1,12 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+
+<suite name="Rozetka sorting and filtering" parallel="methods" thread-count="2" >
+    <test name="Rozetka sorting and filtering">
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="rozetka.RozetkaUITest"/>
+            <class name="rozetka.ProductsFilteringTest"/>
+            <class name="rozetka.ProductsSortingTest"/>
+        </classes>
+    </test>
+</suite>

@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>groupId</groupId>
-    <artifactId>Lesson1</artifactId>
+    <groupId>org.example</groupId>
+    <artifactId>rozetka</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -23,6 +23,8 @@
         <maven.compiler.plugin.version>3.8.0</maven.compiler.plugin.version>
         <java.version>11</java.version>
         <lombok.version>1.18.20</lombok.version>
+        <suiteXmlFile>src/main/resources/sorting_and_filtering_chrome.xml</suiteXmlFile>
+
     </properties>
 
     <dependencies>
@@ -99,6 +101,9 @@
                             <value>${project.build.directory}/allure-results</value>
                         </property>
                     </systemProperties>
+                    <suiteXmlFiles>
+                        <suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
+                    </suiteXmlFiles>
                 </configuration>
             </plugin>
             <plugin>

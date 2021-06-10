@@ -1,13 +1,14 @@
-package google;
+package util;
 
 import com.codeborne.selenide.Configuration;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Parameters;
 
-@Deprecated
 public class TestRunner {
     @BeforeClass
-    public void configureBrowserSelenide() {
-        Configuration.browser = "chrome";
+    @Parameters("browser")
+    public void configureBrowserSelenide(String browser) {
+        Configuration.browser = browser;
         Configuration.startMaximized = true;
         Configuration.timeout = 60000;
     }
