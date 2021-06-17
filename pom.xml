@@ -24,6 +24,7 @@
         <java.version>11</java.version>
         <lombok.version>1.18.20</lombok.version>
         <suiteXmlFile>src/main/resources/sorting_and_filtering_chrome.xml</suiteXmlFile>
+        <browser>chrome</browser>
 
     </properties>
 
@@ -98,7 +99,7 @@
                     <systemProperties>
                         <property>
                             <name>allure.results.directory</name>
-                            <value>${project.build.directory}/allure-results</value>
+                            <value>${project.build.directory}/target/allure-results</value>
                         </property>
                     </systemProperties>
                     <suiteXmlFiles>
@@ -112,7 +113,7 @@
                 <version>${allure-maven.version}</version>
                 <configuration>
                     <reportVersion>${allure-report.version}</reportVersion>
-                    <resultsDirectory>${project.basedir}/allure-results</resultsDirectory>
+                    <resultsDirectory>${project.basedir}/target/allure-results</resultsDirectory>
                     <reportDirectory>${project.basedir}/allure-report</reportDirectory>
                 </configuration>
             </plugin>
