@@ -2,7 +2,7 @@ package page_objects.home_page;
 
 import com.codeborne.selenide.Selenide;
 import io.qameta.allure.Step;
-import lombok.*;
+import lombok.Getter;
 import page_objects.base_page.BasePage;
 
 @Getter

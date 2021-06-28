@@ -1,7 +1,6 @@
 package page_objects;
 
 import lombok.Getter;
-import util.WebElementUtil;
 
 import static com.codeborne.selenide.Selenide.$x;
 import static java.lang.String.format;

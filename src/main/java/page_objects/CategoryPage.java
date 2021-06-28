@@ -6,7 +6,8 @@ import io.qameta.allure.Step;
 import page_objects.subcategory_page.SubCategory;
 import page_objects.subcategory_page.SubCategoryPage;
 
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$$x;
+import static com.codeborne.selenide.Selenide.$x;
 
 public class CategoryPage {
 
