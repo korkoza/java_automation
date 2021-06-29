@@ -1,6 +1,7 @@
 package page_objects;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
